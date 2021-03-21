@@ -32,12 +32,12 @@ public class Model {
         clock=0;
         productCount=0;
         chosenTime=60*12;
-        buffers = new Component[5][2];
-        isI1Busy=true;
-        isI2Busy=true;
-        isW1Busy=true;
-        isW2Busy=true;
-        isW3Busy=true;
+        buffers = new Component[5][2]; //Order: [0]C1 for W1, [1]C1 for W2, [2]C1 for W3, [3]C2 for W2, [4]C3 for W3
+        isI1Busy=false;
+        isI2Busy=false;
+        isW1Busy=false;
+        isW2Busy=false;
+        isW3Busy=false;
         blockedTimeI1=0.0;
         blockedTimeI2=0.0;
         blockedProportionI1=0.0;
@@ -97,6 +97,7 @@ public class Model {
 
     }
 
+    //TODO: Figure out logic for scheduling SA events
     private static void scheduleEvent(Event.eventType type, Component component){
         int time=-1;
         switch(component.getType()){
@@ -106,6 +107,8 @@ public class Model {
                         time = clock+Integer.parseInt(component1InspectionTimes.pop());
                         break;
                     case SA:
+                        //time = clock+Integer.parseInt(component1InspectionTimes.pop());
+                    case EA:
                         time = clock+Integer.parseInt(component1InspectionTimes.pop());
                 }
 
@@ -122,12 +125,35 @@ public class Model {
     }
 
     private static void processEAEvent(Event event) {
+        Component c = event.getComponent();
     }
 
     private static void processSAEvent(Event event) {
     }
 
     private static void processFIEvent(Event event) {
+        Component c = event.getComponent();
+        //Component 1
+        if(c.getId() == 1){
+            int max = -1;
+            for(int i=0;i<3;i++){
+                for(int j=0;j<2;j++){
+                    if(buffers[i][j] != null){
+
+                    }
+                }
+
+            }
+
+        }
+        //Component 2
+        else if(c.getId == 2){
+
+        }
+        //Component 3
+        else{
+
+        }
 
     }
 
