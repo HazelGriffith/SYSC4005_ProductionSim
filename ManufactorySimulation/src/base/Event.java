@@ -8,15 +8,19 @@ package base;
  *
  */
 public class Event implements Comparable<Event>{
-	public enum eventType{SI, FI, SA, EA};
+
+	public enum eventType{FI, SA, EA};
 	private eventType eType;
 	private int time;
 	private Component c;
+	public enum eventLocation{I1, I2, W1, W2, W3};
+	private eventLocation location;
 	
-	public Event(eventType eType, int time, Component c) {
+	public Event(eventType eType, int time, Component c, eventLocation location) {
 		this.eType = eType;
 		this.time = time;
 		this.c = c;
+		this.location = location;
 	}
 	
 	public int compareTo(Event e) {
@@ -64,6 +68,12 @@ public class Event implements Comparable<Event>{
 	public void setC(Component c) {
 		this.c = c;
 	}
-	
-	
+
+	public eventLocation getLocation() {
+		return location;
+	}
+
+	public void setLocation(eventLocation location) {
+		this.location = location;
+	}
 }
