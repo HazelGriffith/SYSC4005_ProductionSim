@@ -8,11 +8,12 @@ import java.util.*;
 public class Model {
 	public static int clock, productCount, chosenTime, totalBlockedTimeI1, totalBlockedTimeI2, startBlockedTimeI1, startBlockedTimeI2;
 	private static Queue<Event> FEL;
-	private static Component[][] buffers;
+	private static ArrayList<Component> bufferC1W1, bufferC1W2, bufferC1W3, bufferC2W2, bufferC3W3;
 
-	private static boolean isI1Busy, isI2Busy;
+	private static boolean isI1Busy, isI2Busy, isW1Busy, isW2Busy, isW3Busy;
 	private static double blockedProportionI1, blockedProportionI2;
 	private static Random randomNum;
+	private static RandomNumberGenerator RNGI1, RNGI2, RNGW1, RNGW2, RNGW3;
 
 	/**
 	 * Initialize all the variables to their initial states and prime the simulation (both inspectors start inspecting
@@ -23,13 +24,21 @@ public class Model {
 		clock=0;
 		productCount=0;
 		chosenTime=60*12;
-		buffers = new Component[5][2]; //Order: [0]C1 for W1, [1]C1 for W2, [2]C1 for W3, [3]C2 for W2, [4]C3 for W3
+		bufferC1W1 = new ArrayList<>();
+		bufferC1W2 = new ArrayList<>();
+		bufferC1W3 = new ArrayList<>();
+		bufferC2W2 = new ArrayList<>();
+		bufferC3W3 = new ArrayList<>();
+		isW1Busy=false;
+		isW2Busy=false;
+		isW3Busy=false;
 		totalBlockedTimeI1=0;
 		totalBlockedTimeI2=0;
 		startBlockedTimeI1=0;
 		startBlockedTimeI2=0;
 		blockedProportionI1=0.0;
 		blockedProportionI2=0.0;
+		//TODO: Initialize RNGs
 
 		//Create first Finish Inspection events for both inspectors (initial state of simulation)
 		scheduleEvent(Event.eventType.FI, new Component(1, Component.serviceType.INSPECTOR), Event.eventLocation.I1);    //Inspector 1
@@ -46,6 +55,23 @@ public class Model {
 	 * @return - return a random number variate
 	 */
 	private static int getRandomTime(Event.eventLocation location){
+		switch (location){
+			case I1:
+				RNGI1.generateRandomVariate();
+				break;
+			case I2:
+				RNGI2.generateRandomVariate();
+				break;
+			case W1:
+				RNGW1.generateRandomVariate();
+				break;
+			case W2:
+				RNGW2.generateRandomVariate();
+				break;
+			case W3:
+				RNGW3.generateRandomVariate();
+				break;
+		}
 		return 0;
 	}
 
@@ -65,7 +91,7 @@ public class Model {
 	}
 
 	/**
-	 * Calculate the proportion of time that the inspectors were idle throughout the simulation.
+	 * Calculate the proportion of time that the inspectors were blocked throughout the simulation.
 	 */
 	private static void getBlockedProportions() {
 		blockedProportionI1 = totalBlockedTimeI1/chosenTime;
@@ -97,7 +123,15 @@ public class Model {
 	 * @param location - where in the flow is this event occurring (inspector or workstation)
 	 */
 	private static void scheduleEvent(Event.eventType type, Component component, Event.eventLocation location){
-		int time = getRandomTime(location);
+		int time = 0;
+		//SA events get scheduled at the end of inspection or end of assembly (they are scheduled and should be the
+		//next event processed.
+		if(type == Event.eventType.SA){
+			time = clock;
+		} else{
+			time = getRandomTime(location);
+		}
+
 		if(location == Event.eventLocation.I1 || location == Event.eventLocation.I2){
 			component.setWhichService(Component.serviceType.INSPECTOR);
 		} else{
@@ -109,33 +143,37 @@ public class Model {
 
 	private static void processEAEvent(Event event) {
 		productCount++;
+		if(event.getLocation() == Event.eventLocation.W1){
+			isW1Busy=false;
+		} else if(event.getLocation() == Event.eventLocation.W2){
+			isW2Busy=false;
+		} else{
+			isW3Busy=false;
+		}
+		checkToScheduleSAEvent(event.getC());
 	}
 
 	private static void processSAEvent(Event event) {
 		//TODO: Check if inspector is blocked and unblock it if necessary.
-		//TODO: Make sure when taking an element out of buffer that it is taken from position 0. If the buffer was full
-		// 		shift element in position1 to position 0 (that way the element is moved to the front of the buffer)
+		//TODO: Set component service type to Workstation
+		//TODO: Set workstation busy boolean to true
 	}
 
 	/**
 	 * Process a Finish Inspection event. Finds which buffer the component should be added to and then calls a
-	 * helper function to actually assign the component to the desired buffer.
+	 * helper function to actually assign the component to the desired buffer. Schedules a new finish inspection event.
+	 * Blocks the inspector if the buffer is full.
 	 * @param event - The event that needs to be processed
 	 */
 	private static void processFIEvent(Event event) {
 		Component c = event.getC();
+		boolean componentAdded = false;
 		int[] stations = new int[3];
 		//Component 1
 		if(c.getId() == 1){
-			for(int i=0;i<3;i++){
-				int count = -1;
-				for(int j=0;j<2;j++){
-					if(buffers[i][j] != null){
-						count++;
-					}
-				}
-				stations[i] = count;
-			}
+			stations[0] = bufferC1W1.size();
+			stations[1] = bufferC1W2.size();
+			stations[2] = bufferC1W3.size();
 			//Default to Work station 1
 			int temp = stations[0];
 			//If W2 buffer is less than W1 buffer
@@ -146,35 +184,26 @@ public class Model {
 			if(stations[2] < stations[1]){
 				temp = stations[2];
 			}
-			addToBuffer(temp,c);
+			componentAdded = addToBuffer(temp,c);
 		}
 		//Component 2
 		else if(c.getId() == 2){
-			addToBuffer(3,c);
+			componentAdded = addToBuffer(3,c);
 		}
 		//Component 3
 		else{
-			addToBuffer(4,c);
+			componentAdded = addToBuffer(4,c);
 		}
-	}
-
-	/**
-	 * Adds a component to the desired workstation buffer and schedules a new finish inspection event.
-	 * Blocks the inspector if the buffer is full.
-	 * @param workstation - the work station we want to add the component to
-	 * @param c - the component to be added to the buffer
-	 */
-	private static void addToBuffer(int workstation, Component c){
-		if(buffers[workstation][0] == null){
-			buffers[workstation][0] = c;
+		if(componentAdded){
 			c.setWhichService(Component.serviceType.BUFFER);
-			scheduleEvent(Event.eventType.FI, new Component(1, Component.serviceType.INSPECTOR), Event.eventLocation.I1);
-		} else if(buffers[workstation][1] == null){
-			buffers[workstation][1] = c;
-			c.setWhichService(Component.serviceType.BUFFER);
-			scheduleEvent(Event.eventType.FI, new Component(randomNum.nextInt(2)+2,
-					Component.serviceType.INSPECTOR), Event.eventLocation.I2);
+			if(c.getId() == 1){
+				scheduleEvent(Event.eventType.FI, new Component(1, Component.serviceType.INSPECTOR), Event.eventLocation.I1);
+			} else{
+				scheduleEvent(Event.eventType.FI, new Component(randomNum.nextInt(2)+2,
+						Component.serviceType.INSPECTOR), Event.eventLocation.I2);
+			}
 		} else{
+			c.setWhichService(Component.serviceType.BLOCKING);
 			if(c.getId() == 1){
 				isI1Busy = false;
 				startBlockedTimeI1 = clock;
@@ -182,8 +211,62 @@ public class Model {
 				isI2Busy = false;
 				startBlockedTimeI2 = clock;
 			}
-			c.setWhichService(Component.serviceType.BLOCKING);
 		}
+		checkToScheduleSAEvent(c);
+	}
+
+	/**
+	 * Checks if any of the workstations are not busy and the necessary elements are present to start assembly
+	 * @param c - component to be assembled
+	 */
+	private static void checkToScheduleSAEvent(Component c) {
+		if(!isW1Busy && !bufferC1W1.isEmpty()){
+			scheduleEvent(Event.eventType.SA, c, Event.eventLocation.W1);
+		}
+		if(!isW2Busy && !bufferC1W2.isEmpty() && !bufferC2W2.isEmpty()){
+			scheduleEvent(Event.eventType.SA, c, Event.eventLocation.W2);
+		}
+		if(!isW3Busy && !bufferC1W3.isEmpty() && !bufferC3W3.isEmpty()){
+			scheduleEvent(Event.eventType.SA, c, Event.eventLocation.W3);
+		}
+	}
+
+	/**
+	 * Adds a component to the desired workstation buffer.
+	 * @param workstation - the work station we want to add the component to
+	 * @param c - the component to be added to the buffer
+	 * @return true if the component was added to the buffer, false otherwise
+	 */
+	private static boolean addToBuffer(int workstation, Component c){
+		boolean componentAdded = false;
+		switch(workstation){
+			case 0:
+				if(bufferC1W1.size() < 2){
+					componentAdded = bufferC1W1.add(c);
+				}
+			case 1:
+				if(bufferC1W2.size() < 2){
+					componentAdded = bufferC1W2.add(c);
+				}
+			case 2:
+				if(bufferC1W3.size() < 2){
+					componentAdded = bufferC1W3.add(c);
+				}
+			case 3:
+				if(bufferC2W2.size() < 2){
+					componentAdded = bufferC2W2.add(c);
+				}
+			case 4:
+				if(bufferC3W3.size() < 2){
+					componentAdded = bufferC3W3.add(c);
+				}
+		}
+		return componentAdded;
+	}
+
+	//TODO: Implement and add other print statements
+	public void generateReport(){
+
 	}
 }
 
