@@ -6,7 +6,8 @@ package base;
 import java.util.*;
 
 public class Model {
-	public static int clock, productCount, chosenTime, totalBlockedTimeI1, totalBlockedTimeI2, startBlockedTimeI1, startBlockedTimeI2;
+	private static int productCount;
+	private static double clock, chosenTime, totalBlockedTimeI1, totalBlockedTimeI2, startBlockedTimeI1, startBlockedTimeI2;
 	private static Queue<Event> FEL;
 	private static ArrayList<Component> bufferC1W1, bufferC1W2, bufferC1W3, bufferC2W2, bufferC3W3;
 	private static Component blockedI1Component, blockedI2Component;
@@ -21,9 +22,10 @@ public class Model {
 	 * Initialize all the variables to their initial states and prime the simulation (both inspectors start inspecting
 	 * components).
 	 */
-	private static void initialize() {
+	public static void initialize() {
 		//Initialize the arrays and get the times from the files
-		clock=0;
+		FEL = new PriorityQueue<Event>();
+		clock=0.0;
 		productCount=0;
 		chosenTime=60*12;
 		bufferC1W1 = new ArrayList<>();
@@ -34,13 +36,18 @@ public class Model {
 		isW1Busy=false;
 		isW2Busy=false;
 		isW3Busy=false;
-		totalBlockedTimeI1=0;
-		totalBlockedTimeI2=0;
-		startBlockedTimeI1=0;
-		startBlockedTimeI2=0;
+		totalBlockedTimeI1=0.0;
+		totalBlockedTimeI2=0.0;
+		startBlockedTimeI1=0.0;
+		startBlockedTimeI2=0.0;
 		blockedProportionI1=0.0;
 		blockedProportionI2=0.0;
 		//TODO: Initialize RNGs
+		RNGI1 = new RandomNumberGenerator(17,43,100,27,1.5);
+		RNGI2 = new RandomNumberGenerator(17,43,100,27,1.5);
+		RNGW1 = new RandomNumberGenerator(17,43,100,27,1.5);
+		RNGW2 = new RandomNumberGenerator(17,43,100,27,1.5);
+		RNGW3 = new RandomNumberGenerator(17,43,100,27,1.5);
 
 		//Create first Finish Inspection events for both inspectors (initial state of simulation)
 		scheduleEvent(Event.eventType.FI, new Component(1, Component.serviceType.INSPECTOR), Event.eventLocation.I1);    //Inspector 1
@@ -56,30 +63,37 @@ public class Model {
 	 * @param location - use the location to determine which distribution to use
 	 * @return - return a random number variate
 	 */
-	private static int getRandomTime(Event.eventLocation location){
+	public static double getRandomTime(Event.eventLocation location){
+		double time = -1.0;
 		switch (location){
 			case I1:
-				RNGI1.generateRandomVariate();
+				time = RNGI1.generateRandomVariate();
 				break;
 			case I2:
-				RNGI2.generateRandomVariate();
+				time = RNGI2.generateRandomVariate();
 				break;
 			case W1:
-				RNGW1.generateRandomVariate();
+				time = RNGW1.generateRandomVariate();
 				break;
 			case W2:
-				RNGW2.generateRandomVariate();
+				time = RNGW2.generateRandomVariate();
 				break;
 			case W3:
-				RNGW3.generateRandomVariate();
+				time = RNGW3.generateRandomVariate();
 				break;
 		}
-		return 0;
+		return time;
+	}
+
+	/**
+	 * Constructor to be used for testing
+	 */
+	public Model(){
+		initialize();
 	}
 
 	public static void main(String[] args) {
 		Event nextEvent = null;
-		FEL = new PriorityQueue<Event>();
 		initialize();
 
 		while(!FEL.isEmpty() && (clock<chosenTime)){
@@ -96,7 +110,7 @@ public class Model {
 	/**
 	 * Calculate the proportion of time that the inspectors were blocked throughout the simulation.
 	 */
-	private static void getBlockedProportions() {
+	public static void getBlockedProportions() {
 		blockedProportionI1 = totalBlockedTimeI1/chosenTime;
 		blockedProportionI2 = totalBlockedTimeI2/chosenTime;
 	}
@@ -105,7 +119,7 @@ public class Model {
 	 * Figure out which type of event needs processing and call the appropriate function.
 	 * @param nextEvent - the event that needs to be processed
 	 */
-	private static void processEvent(Event nextEvent) {
+	public static void processEvent(Event nextEvent) {
 		switch(nextEvent.geteType()){
 			case FI:
 				processFIEvent(nextEvent);
@@ -122,8 +136,8 @@ public class Model {
 	 * @param component - the component to be scheduled
 	 * @param location - where in the flow is this event occurring (inspector or workstation)
 	 */
-	private static void scheduleEvent(Event.eventType type, Component component, Event.eventLocation location){
-		int time = 0;
+	public static void scheduleEvent(Event.eventType type, Component component, Event.eventLocation location){
+		double time = 0.0;
 		
 		time = getRandomTime(location);
 
@@ -136,7 +150,7 @@ public class Model {
 		FEL.offer(newEvent);
 	}
 
-	private static void processEAEvent(Event event) {
+	public static void processEAEvent(Event event) {
 		productCount++;
 		if(event.getLocation() == Event.eventLocation.W1){
 			isW1Busy=false;
@@ -148,41 +162,19 @@ public class Model {
 		checkToScheduleEAEvent(event);
 	}
 
-	/*private static void processSA(Event event) {
-		
-		
-		
-		//TODO: Check if inspector is blocked and unblock it if necessary.
-		//TODO: Set component service type to Workstation
-		//TODO: Set workstation busy boolean to true
-	}*/
-
 	/**
 	 * Process a Finish Inspection event. Finds which buffer the component should be added to and then calls a
 	 * helper function to actually assign the component to the desired buffer. Schedules a new finish inspection event.
 	 * Blocks the inspector if the buffer is full.
 	 * @param event - The event that needs to be processed
 	 */
-	private static void processFIEvent(Event event) {
+	public static void processFIEvent(Event event) {
 		bufferType buffer;
 		Component c = event.getC();
 		boolean componentAdded = false;
 		int[] bufferSizes = new int[3];
 		//Component 1
 		if(c.getId() == 1){
-			/*bufferSizes[0] = bufferC1W1.size();
-			bufferSizes[1] = bufferC1W2.size();
-			bufferSizes[2] = bufferC1W3.size();
-			//Default to Work station 1
-			buffer = bufferType.BC1W1;
-			//If W2 buffer is less than W1 buffer
-			if(bufferSizes[1] < bufferSizes[0]){
-				buffer = bufferType.BC1W2;
-			}
-			//If W3 buffer is less than W2 buffer
-			if(bufferSizes[2] < bufferSizes[1]){
-				buffer = bufferType.BC1W3;
-			}*/
 			componentAdded = selectC1Buffer(c);
 		}
 		//Component 2
@@ -272,7 +264,7 @@ public class Model {
 				}
 			} else {
 				if (bufferC3W3.size() < 2) {
-					result = addToBuffer(bufferType.BC2W2, cI2);
+					result = addToBuffer(bufferType.BC3W3, cI2);
 				}
 			}
 			if (result) {
@@ -292,7 +284,7 @@ public class Model {
 	 * Then if the associated workstation is not busy, and there are components available, the EA event is scheduled.
 	 * It then ends by checking if any Inspectors should unblock after buffer space might have been made available.
 	 * 
-	 * @param Event event
+	 * @param event event
 	 */
 	public static void checkToScheduleEAEvent(Event event) {
 		Component c = event.getC();
@@ -323,33 +315,38 @@ public class Model {
 
 	/**
 	 * Adds a component to the desired workstation buffer.
-	 * @param workstation - the work station we want to add the component to
+	 * @param buffer - the work station we want to add the component to
 	 * @param c - the component to be added to the buffer
 	 * @return true if the component was added to the buffer, false otherwise
 	 */
-	private static boolean addToBuffer(bufferType buffer, Component c){
+	public static boolean addToBuffer(bufferType buffer, Component c){
 		boolean componentAdded = false;
 		switch(buffer){
 			case BC1W1:
 				if(bufferC1W1.size() < 2){
 					componentAdded = bufferC1W1.add(c);
 				}
+				break;
 			case BC1W2:
 				if(bufferC1W2.size() < 2){
 					componentAdded = bufferC1W2.add(c);
 				}
+				break;
 			case BC1W3:
 				if(bufferC1W3.size() < 2){
 					componentAdded = bufferC1W3.add(c);
 				}
+				break;
 			case BC2W2:
 				if(bufferC2W2.size() < 2){
 					componentAdded = bufferC2W2.add(c);
 				}
+				break;
 			case BC3W3:
 				if(bufferC3W3.size() < 2){
 					componentAdded = bufferC3W3.add(c);
 				}
+				break;
 		}
 		return componentAdded;
 	}
@@ -357,6 +354,246 @@ public class Model {
 	//TODO: Implement and add other print statements
 	public void generateReport(){
 
+	}
+
+	public static int getProductCount() {
+		return productCount;
+	}
+
+	public static void setProductCount(int productCount) {
+		Model.productCount = productCount;
+	}
+
+	public static double getClock() {
+		return clock;
+	}
+
+	public static void setClock(double clock) {
+		Model.clock = clock;
+	}
+
+	public static double getChosenTime() {
+		return chosenTime;
+	}
+
+	public static void setChosenTime(double chosenTime) {
+		Model.chosenTime = chosenTime;
+	}
+
+	public static double getTotalBlockedTimeI1() {
+		return totalBlockedTimeI1;
+	}
+
+	public static void setTotalBlockedTimeI1(double totalBlockedTimeI1) {
+		Model.totalBlockedTimeI1 = totalBlockedTimeI1;
+	}
+
+	public static double getTotalBlockedTimeI2() {
+		return totalBlockedTimeI2;
+	}
+
+	public static void setTotalBlockedTimeI2(double totalBlockedTimeI2) {
+		Model.totalBlockedTimeI2 = totalBlockedTimeI2;
+	}
+
+	public static double getStartBlockedTimeI1() {
+		return startBlockedTimeI1;
+	}
+
+	public static void setStartBlockedTimeI1(double startBlockedTimeI1) {
+		Model.startBlockedTimeI1 = startBlockedTimeI1;
+	}
+
+	public static double getStartBlockedTimeI2() {
+		return startBlockedTimeI2;
+	}
+
+	public static void setStartBlockedTimeI2(double startBlockedTimeI2) {
+		Model.startBlockedTimeI2 = startBlockedTimeI2;
+	}
+
+	public static Queue<Event> getFEL() {
+		return FEL;
+	}
+
+	public static void setFEL(Queue<Event> FEL) {
+		Model.FEL = FEL;
+	}
+
+	public static ArrayList<Component> getBufferC1W1() {
+		return bufferC1W1;
+	}
+
+	public static void setBufferC1W1(ArrayList<Component> bufferC1W1) {
+		Model.bufferC1W1 = bufferC1W1;
+	}
+
+	public static ArrayList<Component> getBufferC1W2() {
+		return bufferC1W2;
+	}
+
+	public static void setBufferC1W2(ArrayList<Component> bufferC1W2) {
+		Model.bufferC1W2 = bufferC1W2;
+	}
+
+	public static ArrayList<Component> getBufferC1W3() {
+		return bufferC1W3;
+	}
+
+	public static void setBufferC1W3(ArrayList<Component> bufferC1W3) {
+		Model.bufferC1W3 = bufferC1W3;
+	}
+
+	public static ArrayList<Component> getBufferC2W2() {
+		return bufferC2W2;
+	}
+
+	public static void setBufferC2W2(ArrayList<Component> bufferC2W2) {
+		Model.bufferC2W2 = bufferC2W2;
+	}
+
+	public static ArrayList<Component> getBufferC3W3() {
+		return bufferC3W3;
+	}
+
+	public static void setBufferC3W3(ArrayList<Component> bufferC3W3) {
+		Model.bufferC3W3 = bufferC3W3;
+	}
+
+	public static Component getBlockedI1Component() {
+		return blockedI1Component;
+	}
+
+	public static void setBlockedI1Component(Component blockedI1Component) {
+		Model.blockedI1Component = blockedI1Component;
+	}
+
+	public static Component getBlockedI2Component() {
+		return blockedI2Component;
+	}
+
+	public static void setBlockedI2Component(Component blockedI2Component) {
+		Model.blockedI2Component = blockedI2Component;
+	}
+
+	public static boolean isIsI1Busy() {
+		return isI1Busy;
+	}
+
+	public static void setIsI1Busy(boolean isI1Busy) {
+		Model.isI1Busy = isI1Busy;
+	}
+
+	public static boolean isIsI2Busy() {
+		return isI2Busy;
+	}
+
+	public static void setIsI2Busy(boolean isI2Busy) {
+		Model.isI2Busy = isI2Busy;
+	}
+
+	public static boolean isIsW1Busy() {
+		return isW1Busy;
+	}
+
+	public static void setIsW1Busy(boolean isW1Busy) {
+		Model.isW1Busy = isW1Busy;
+	}
+
+	public static boolean isIsW2Busy() {
+		return isW2Busy;
+	}
+
+	public static void setIsW2Busy(boolean isW2Busy) {
+		Model.isW2Busy = isW2Busy;
+	}
+
+	public static boolean isIsW3Busy() {
+		return isW3Busy;
+	}
+
+	public static void setIsW3Busy(boolean isW3Busy) {
+		Model.isW3Busy = isW3Busy;
+	}
+
+	public static boolean isIsI1Blocked() {
+		return isI1Blocked;
+	}
+
+	public static void setIsI1Blocked(boolean isI1Blocked) {
+		Model.isI1Blocked = isI1Blocked;
+	}
+
+	public static boolean isIsI2Blocked() {
+		return isI2Blocked;
+	}
+
+	public static void setIsI2Blocked(boolean isI2Blocked) {
+		Model.isI2Blocked = isI2Blocked;
+	}
+
+	public static double getBlockedProportionI1() {
+		return blockedProportionI1;
+	}
+
+	public static void setBlockedProportionI1(double blockedProportionI1) {
+		Model.blockedProportionI1 = blockedProportionI1;
+	}
+
+	public static double getBlockedProportionI2() {
+		return blockedProportionI2;
+	}
+
+	public static void setBlockedProportionI2(double blockedProportionI2) {
+		Model.blockedProportionI2 = blockedProportionI2;
+	}
+
+	public static Random getRandomNum() {
+		return randomNum;
+	}
+
+	public static void setRandomNum(Random randomNum) {
+		Model.randomNum = randomNum;
+	}
+
+	public static RandomNumberGenerator getRNGI1() {
+		return RNGI1;
+	}
+
+	public static void setRNGI1(RandomNumberGenerator RNGI1) {
+		Model.RNGI1 = RNGI1;
+	}
+
+	public static RandomNumberGenerator getRNGI2() {
+		return RNGI2;
+	}
+
+	public static void setRNGI2(RandomNumberGenerator RNGI2) {
+		Model.RNGI2 = RNGI2;
+	}
+
+	public static RandomNumberGenerator getRNGW1() {
+		return RNGW1;
+	}
+
+	public static void setRNGW1(RandomNumberGenerator RNGW1) {
+		Model.RNGW1 = RNGW1;
+	}
+
+	public static RandomNumberGenerator getRNGW2() {
+		return RNGW2;
+	}
+
+	public static void setRNGW2(RandomNumberGenerator RNGW2) {
+		Model.RNGW2 = RNGW2;
+	}
+
+	public static RandomNumberGenerator getRNGW3() {
+		return RNGW3;
+	}
+
+	public static void setRNGW3(RandomNumberGenerator RNGW3) {
+		Model.RNGW3 = RNGW3;
 	}
 }
 

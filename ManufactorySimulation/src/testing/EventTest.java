@@ -1,5 +1,7 @@
-package base;
+package testing;
 
+import base.Component;
+import base.Event;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +13,7 @@ public class EventTest {
     private Event e;
     @Before
     public void setUp() throws Exception {
-        e = new Event(Event.eventType.FI, 2,new Component(1, Component.serviceType.INSPECTOR),
+        e = new Event(Event.eventType.FI, 2.0,new Component(1, Component.serviceType.INSPECTOR),
                 Event.eventLocation.I1);
     }
 
@@ -32,13 +34,13 @@ public class EventTest {
 
     @Test
     public void getTime() {
-        assertEquals(2, e.getTime());
+        assertEquals(2.0, e.getTime(),0.05);
     }
 
     @Test
     public void setTime() {
-        e.setTime(4);
-        assertEquals(4, e.getTime());
+        e.setTime(4.0);
+        assertEquals(4.0, e.getTime(),0.05);
     }
 
     @Test
