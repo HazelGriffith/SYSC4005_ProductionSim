@@ -16,6 +16,10 @@ public class Component {
 		this.id = id;
 		this.whichService = whichService;
 	}
+	
+	public String toString() {
+		return ("C"+id+" with service: " + whichService);
+	}
 
 	/**
 	 * @return the id
