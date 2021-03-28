@@ -4,23 +4,25 @@ package base;
  * Generates random numbers using the Linear Congruential Method (LCM)
  */
 public class RandomNumberGenerator {
-    private int a, c, m, X;
+    private double a, c, m, X, lambda;
 
-    public RandomNumberGenerator(int a, int c, int m, int x) {
+    public RandomNumberGenerator(double a, double c, double m, double x, double lambda) {
         this.a = a;
         this.c = c;
         this.m = m;
         X = x;
+        this.lambda = lambda;
     }
 
-    private double generateRandomNumber(){
-        int nextX = (a*X+c)%m;
+    public double generateRandomNumber(){
+        double nextX = (a*X+c)%m;
         double R = nextX/m;
         X = nextX;
         return R;
     }
 
     public double generateRandomVariate(){
-        return generateRandomNumber();
+        double random = generateRandomNumber();
+        return (-1/lambda)*Math.log(random);
     }
 }
