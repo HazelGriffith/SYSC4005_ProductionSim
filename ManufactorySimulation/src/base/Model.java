@@ -9,12 +9,14 @@ public class Model {
 	public static int clock, productCount, chosenTime, totalBlockedTimeI1, totalBlockedTimeI2, startBlockedTimeI1, startBlockedTimeI2;
 	private static Queue<Event> FEL;
 	private static ArrayList<Component> bufferC1W1, bufferC1W2, bufferC1W3, bufferC2W2, bufferC3W3;
+	private static Component blockedI1Component, blockedI2Component;
 
-	private static boolean isI1Busy, isI2Busy, isW1Busy, isW2Busy, isW3Busy;
+	private static boolean isI1Busy, isI2Busy, isW1Busy, isW2Busy, isW3Busy, isI1Blocked, isI2Blocked;
 	private static double blockedProportionI1, blockedProportionI2;
 	private static Random randomNum;
 	private static RandomNumberGenerator RNGI1, RNGI2, RNGW1, RNGW2, RNGW3;
 
+	private static enum bufferType{BC1W1, BC1W2, BC1W3, BC2W2, BC3W3};
 	/**
 	 * Initialize all the variables to their initial states and prime the simulation (both inspectors start inspecting
 	 * components).
@@ -82,6 +84,7 @@ public class Model {
 
 		while(!FEL.isEmpty() && (clock<chosenTime)){
 			nextEvent = FEL.poll();
+			System.out.println(nextEvent);
 			if(nextEvent != null){
 				clock=nextEvent.getTime();
 				processEvent(nextEvent);
@@ -107,9 +110,6 @@ public class Model {
 			case FI:
 				processFIEvent(nextEvent);
 				break;
-			case SA:
-				processSAEvent(nextEvent);
-				break;
 			case EA:
 				processEAEvent(nextEvent);
 				break;
@@ -124,13 +124,8 @@ public class Model {
 	 */
 	private static void scheduleEvent(Event.eventType type, Component component, Event.eventLocation location){
 		int time = 0;
-		//SA events get scheduled at the end of inspection or end of assembly (they are scheduled and should be the
-		//next event processed.
-		if(type == Event.eventType.SA){
-			time = clock;
-		} else{
-			time = getRandomTime(location);
-		}
+		
+		time = getRandomTime(location);
 
 		if(location == Event.eventLocation.I1 || location == Event.eventLocation.I2){
 			component.setWhichService(Component.serviceType.INSPECTOR);
@@ -150,14 +145,17 @@ public class Model {
 		} else{
 			isW3Busy=false;
 		}
-		checkToScheduleSAEvent(event.getC());
+		checkToScheduleEAEvent(event);
 	}
 
-	private static void processSAEvent(Event event) {
+	/*private static void processSA(Event event) {
+		
+		
+		
 		//TODO: Check if inspector is blocked and unblock it if necessary.
 		//TODO: Set component service type to Workstation
 		//TODO: Set workstation busy boolean to true
-	}
+	}*/
 
 	/**
 	 * Process a Finish Inspection event. Finds which buffer the component should be added to and then calls a
@@ -166,33 +164,36 @@ public class Model {
 	 * @param event - The event that needs to be processed
 	 */
 	private static void processFIEvent(Event event) {
+		bufferType buffer;
 		Component c = event.getC();
 		boolean componentAdded = false;
-		int[] stations = new int[3];
+		int[] bufferSizes = new int[3];
 		//Component 1
 		if(c.getId() == 1){
-			stations[0] = bufferC1W1.size();
-			stations[1] = bufferC1W2.size();
-			stations[2] = bufferC1W3.size();
+			/*bufferSizes[0] = bufferC1W1.size();
+			bufferSizes[1] = bufferC1W2.size();
+			bufferSizes[2] = bufferC1W3.size();
 			//Default to Work station 1
-			int temp = stations[0];
+			buffer = bufferType.BC1W1;
 			//If W2 buffer is less than W1 buffer
-			if(stations[1] < stations[0]){
-				temp = stations[1];
+			if(bufferSizes[1] < bufferSizes[0]){
+				buffer = bufferType.BC1W2;
 			}
 			//If W3 buffer is less than W2 buffer
-			if(stations[2] < stations[1]){
-				temp = stations[2];
-			}
-			componentAdded = addToBuffer(temp,c);
+			if(bufferSizes[2] < bufferSizes[1]){
+				buffer = bufferType.BC1W3;
+			}*/
+			componentAdded = selectC1Buffer(c);
 		}
 		//Component 2
 		else if(c.getId() == 2){
-			componentAdded = addToBuffer(3,c);
+			buffer = bufferType.BC2W2;
+			componentAdded = addToBuffer(buffer,c);
 		}
 		//Component 3
 		else{
-			componentAdded = addToBuffer(4,c);
+			buffer = bufferType.BC3W3;
+			componentAdded = addToBuffer(buffer,c);
 		}
 		if(componentAdded){
 			c.setWhichService(Component.serviceType.BUFFER);
@@ -206,29 +207,118 @@ public class Model {
 			c.setWhichService(Component.serviceType.BLOCKING);
 			if(c.getId() == 1){
 				isI1Busy = false;
+				isI1Blocked = true;
+				blockedI1Component = c;
 				startBlockedTimeI1 = clock;
 			} else{
 				isI2Busy = false;
+				isI2Blocked = true;
+				blockedI2Component = c;
 				startBlockedTimeI2 = clock;
 			}
 		}
-		checkToScheduleSAEvent(c);
+		checkToScheduleEAEvent(event);
 	}
-
+	
 	/**
-	 * Checks if any of the workstations are not busy and the necessary elements are present to start assembly
-	 * @param c - component to be assembled
+	 * selectC1Buffer selects the C1 buffer for the given component following the chosen policy.
+	 * The addToBuffer function is then called to try and place the component in the buffer.
+	 * If successful it returns true, false otherwise.
+	 * 
+	 * @return boolean
 	 */
-	private static void checkToScheduleSAEvent(Component c) {
-		if(!isW1Busy && !bufferC1W1.isEmpty()){
-			scheduleEvent(Event.eventType.SA, c, Event.eventLocation.W1);
+	public static boolean selectC1Buffer(Component c) {
+		bufferType buffer;
+		int[] bufferSizes = new int[3];
+		bufferSizes[0] = bufferC1W1.size();
+		bufferSizes[1] = bufferC1W2.size();
+		bufferSizes[2] = bufferC1W3.size();
+		//Default to Work station 1
+		buffer = bufferType.BC1W1;
+		//If W2 buffer is less than W1 buffer
+		if(bufferSizes[1] < bufferSizes[0]){
+			buffer = bufferType.BC1W2;
 		}
-		if(!isW2Busy && !bufferC1W2.isEmpty() && !bufferC2W2.isEmpty()){
-			scheduleEvent(Event.eventType.SA, c, Event.eventLocation.W2);
+		//If W3 buffer is less than W2 buffer
+		if(bufferSizes[2] < bufferSizes[1]){
+			buffer = bufferType.BC1W3;
 		}
-		if(!isW3Busy && !bufferC1W3.isEmpty() && !bufferC3W3.isEmpty()){
-			scheduleEvent(Event.eventType.SA, c, Event.eventLocation.W3);
+		return addToBuffer(buffer,c);
+	}
+	
+	/**
+	 * checkToUnblockInspectors function checks if each Inspector is blocked, and if so, checks to see if it can now unblock.
+	 * If it can unblock, the component is added to the appropriate buffer, and statistics are taken of the time spent blocked.
+	 */
+	public static void checkToUnblockInspectors() {
+		boolean result = false;
+		if (isI1Blocked) {
+			result = selectC1Buffer(blockedI1Component);
+			if (result) {
+				isI1Blocked = false;
+				blockedI1Component = null;
+				totalBlockedTimeI1 += clock - startBlockedTimeI1;
+				startBlockedTimeI1 = 0;
+				result = false;
+				scheduleEvent(Event.eventType.FI, new Component(1, Component.serviceType.INSPECTOR), Event.eventLocation.I1);
+			}
 		}
+		
+		if (isI2Blocked) {
+			Component cI2 = blockedI2Component;
+			if (cI2.getId() == 2) {
+				if (bufferC2W2.size() < 2) {
+					result = addToBuffer(bufferType.BC2W2, cI2);
+				}
+			} else {
+				if (bufferC3W3.size() < 2) {
+					result = addToBuffer(bufferType.BC2W2, cI2);
+				}
+			}
+			if (result) {
+				isI2Blocked = false;
+				blockedI2Component = null;
+				totalBlockedTimeI2 += clock - startBlockedTimeI2;
+				startBlockedTimeI2 = 0;
+				result = false;
+				scheduleEvent(Event.eventType.FI, new Component(randomNum.nextInt(2)+2, Component.serviceType.INSPECTOR), Event.eventLocation.I1);
+			}
+		}
+	}
+	
+	/**
+	 * checkToScheduleEAEvent function accepts the current FI or EA event, and checks if another EA event should be scheduled.
+	 * It starts by calling the checkToUnblockInspectors() function to make sure all usable components are in buffers.
+	 * Then if the associated workstation is not busy, and there are components available, the EA event is scheduled.
+	 * It then ends by checking if any Inspectors should unblock after buffer space might have been made available.
+	 * 
+	 * @param Event event
+	 */
+	public static void checkToScheduleEAEvent(Event event) {
+		Component c = event.getC();
+		checkToUnblockInspectors();
+		if (!isW1Busy) {
+			if (!bufferC1W1.isEmpty()) {
+				bufferC1W1.remove(0);
+				scheduleEvent(Event.eventType.EA, event.getC(), Event.eventLocation.W1);
+				isW1Busy = true;
+			}
+		} else if (!isW2Busy) {
+			if ((!bufferC1W2.isEmpty())&&(!bufferC2W2.isEmpty())){
+				bufferC1W2.remove(0);
+				bufferC2W2.remove(0);
+				scheduleEvent(Event.eventType.EA, event.getC(), Event.eventLocation.W2);
+				isW2Busy = true;
+			}
+		} else if (!isW3Busy) {
+			if ((!bufferC1W3.isEmpty())&&(!bufferC3W3.isEmpty())){
+				bufferC1W3.remove(0);
+				bufferC3W3.remove(0);
+				scheduleEvent(Event.eventType.EA, event.getC(), Event.eventLocation.W3);
+				isW3Busy = true;
+			}
+		}
+		checkToUnblockInspectors();
 	}
 
 	/**
@@ -237,26 +327,26 @@ public class Model {
 	 * @param c - the component to be added to the buffer
 	 * @return true if the component was added to the buffer, false otherwise
 	 */
-	private static boolean addToBuffer(int workstation, Component c){
+	private static boolean addToBuffer(bufferType buffer, Component c){
 		boolean componentAdded = false;
-		switch(workstation){
-			case 0:
+		switch(buffer){
+			case BC1W1:
 				if(bufferC1W1.size() < 2){
 					componentAdded = bufferC1W1.add(c);
 				}
-			case 1:
+			case BC1W2:
 				if(bufferC1W2.size() < 2){
 					componentAdded = bufferC1W2.add(c);
 				}
-			case 2:
+			case BC1W3:
 				if(bufferC1W3.size() < 2){
 					componentAdded = bufferC1W3.add(c);
 				}
-			case 3:
+			case BC2W2:
 				if(bufferC2W2.size() < 2){
 					componentAdded = bufferC2W2.add(c);
 				}
-			case 4:
+			case BC3W3:
 				if(bufferC3W3.size() < 2){
 					componentAdded = bufferC3W3.add(c);
 				}

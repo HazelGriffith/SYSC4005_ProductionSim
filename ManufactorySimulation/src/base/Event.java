@@ -9,7 +9,7 @@ package base;
  */
 public class Event implements Comparable<Event>{
 
-	public enum eventType{FI, SA, EA};
+	public enum eventType{FI, EA};
 	private eventType eType;
 	private int time;
 	private Component c;
@@ -25,6 +25,10 @@ public class Event implements Comparable<Event>{
 	
 	public int compareTo(Event e) {
 		return this.getTime() - e.getTime();
+	}
+	
+	public String toString() {
+		return ("event type is: " + eType + " Time of Event is: " + time + " Component is: " + c + " Event location is: " + location);
 	}
 
 	/**
