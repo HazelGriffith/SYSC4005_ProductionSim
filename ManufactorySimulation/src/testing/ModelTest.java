@@ -97,6 +97,23 @@ public class ModelTest {
 
     @Test
     public void addToBuffer() {
+        Component component1 = new Component(1, Component.serviceType.INSPECTOR);
+        Component component2 = new Component(2, Component.serviceType.INSPECTOR);
+        Component component3 = new Component(3, Component.serviceType.INSPECTOR);
+        assertTrue(model.addToBuffer(Model.bufferType.BC1W1, component1));
+        assertEquals(1,model.getBufferC1W1().size());
+        assertTrue(model.addToBuffer(Model.bufferType.BC1W1, component1));
+        assertEquals(2,model.getBufferC1W1().size());
+        assertFalse(model.addToBuffer(Model.bufferType.BC1W1, component1));
+        assertEquals(2,model.getBufferC1W1().size());
+        assertTrue(model.addToBuffer(Model.bufferType.BC1W2, component1));
+        assertEquals(1,model.getBufferC1W2().size());
+        assertTrue(model.addToBuffer(Model.bufferType.BC1W3, component1));
+        assertEquals(1,model.getBufferC1W3().size());
+        assertTrue(model.addToBuffer(Model.bufferType.BC2W2, component2));
+        assertEquals(1,model.getBufferC2W2().size());
+        assertTrue(model.addToBuffer(Model.bufferType.BC3W3, component3));
+        assertEquals(1,model.getBufferC3W3().size());
     }
 
 }

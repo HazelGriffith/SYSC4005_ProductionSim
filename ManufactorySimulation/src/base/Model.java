@@ -17,7 +17,7 @@ public class Model {
 	private static Random randomNum;
 	private static RandomNumberGenerator RNGI1, RNGI2, RNGW1, RNGW2, RNGW3;
 
-	private static enum bufferType{BC1W1, BC1W2, BC1W3, BC2W2, BC3W3};
+	public static enum bufferType{BC1W1, BC1W2, BC1W3, BC2W2, BC3W3};
 	/**
 	 * Initialize all the variables to their initial states and prime the simulation (both inspectors start inspecting
 	 * components).
@@ -27,7 +27,7 @@ public class Model {
 		FEL = new PriorityQueue<Event>();
 		clock=0.0;
 		productCount=0;
-		chosenTime=20;
+		chosenTime=60*12;
 		bufferC1W1 = new ArrayList<>();
 		bufferC1W2 = new ArrayList<>();
 		bufferC1W3 = new ArrayList<>();
@@ -106,13 +106,19 @@ public class Model {
 			}
 		}
 		getBlockedProportions();
-		System.out.println("Total product count: "+productCount);
+		generateReport();
 	}
 
 	/**
 	 * Calculate the proportion of time that the inspectors were blocked throughout the simulation.
 	 */
 	public static void getBlockedProportions() {
+		if(startBlockedTimeI2 != 0.0){
+			totalBlockedTimeI2 += clock - startBlockedTimeI2;
+		}
+		if(startBlockedTimeI1 != 0.0){
+			totalBlockedTimeI1 += clock - startBlockedTimeI1;
+		}
 		blockedProportionI1 = totalBlockedTimeI1/chosenTime;
 		blockedProportionI2 = totalBlockedTimeI2/chosenTime;
 	}
@@ -289,7 +295,6 @@ public class Model {
 	 * @param event event
 	 */
 	public static void checkToScheduleEAEvent(Event event) {
-		Component c = event.getC();
 		checkToUnblockInspectors();
 		if (!isW1Busy) {
 			if (!bufferC1W1.isEmpty()) {
@@ -354,8 +359,11 @@ public class Model {
 	}
 
 	//TODO: Implement and add other print statements
-	public void generateReport(){
-
+	private static void generateReport(){
+		System.out.println("*** Final Report ***");
+		System.out.println("Total product count: "+productCount);
+		System.out.println("Total proportion Inspector 1 was blocked: "+blockedProportionI1);
+		System.out.println("Total proportion Inspector 2 was blocked: "+blockedProportionI2);
 	}
 
 	public static int getProductCount() {
