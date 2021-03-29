@@ -27,7 +27,7 @@ public class Model {
 		FEL = new PriorityQueue<Event>();
 		clock=0.0;
 		productCount=0;
-		chosenTime=60*12;
+		chosenTime=20;
 		bufferC1W1 = new ArrayList<>();
 		bufferC1W2 = new ArrayList<>();
 		bufferC1W3 = new ArrayList<>();
@@ -98,6 +98,7 @@ public class Model {
 
 		while(!FEL.isEmpty() && (clock<chosenTime)){
 			nextEvent = FEL.poll();
+			System.out.println("Clock is: "+clock);
 			System.out.println(nextEvent);
 			if(nextEvent != null){
 				clock=nextEvent.getTime();
@@ -105,6 +106,7 @@ public class Model {
 			}
 		}
 		getBlockedProportions();
+		System.out.println("Total product count: "+productCount);
 	}
 
 	/**
@@ -146,7 +148,7 @@ public class Model {
 		} else{
 			component.setWhichService(Component.serviceType.WORKSTATION);
 		}
-		Event newEvent = new Event(type, time, component, location);
+		Event newEvent = new Event(type, time+clock, component, location);
 		FEL.offer(newEvent);
 	}
 
