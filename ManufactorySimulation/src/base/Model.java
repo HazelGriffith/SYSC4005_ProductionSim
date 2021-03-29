@@ -5,6 +5,8 @@ package base;
 
 import java.util.*;
 
+import static java.lang.Math.sqrt;
+
 public class Model {
 	private static int productCount;
 	private static double clock, chosenTime, totalBlockedTimeI1, totalBlockedTimeI2, startBlockedTimeI1, startBlockedTimeI2;
@@ -15,15 +17,19 @@ public class Model {
 	private static boolean isI1Busy, isI2Busy, isW1Busy, isW2Busy, isW3Busy, isI1Blocked, isI2Blocked;
 	private static double blockedProportionI1, blockedProportionI2;
 	private static Random randomNum;
-	private static RandomNumberGenerator RNGI1, RNGI2, RNGW1, RNGW2, RNGW3;
+	private static RandomNumberGenerator RNGC1, RNGC2, RNGC3, RNGW1, RNGW2, RNGW3;
 
 	public static enum bufferType{BC1W1, BC1W2, BC1W3, BC2W2, BC3W3};
 	/**
 	 * Initialize all the variables to their initial states and prime the simulation (both inspectors start inspecting
 	 * components).
 	 */
-	public static void initialize() {
-		//Initialize the arrays and get the times from the files
+	public static void initialize(int[] args) {
+		int[] seeds = new int[6];
+		for(int i = 0; i < args.length; i++) {
+			seeds[i] = args[i];
+			System.out.println(seeds[i]);
+		}
 		FEL = new PriorityQueue<Event>();
 		clock=0.0;
 		productCount=0;
@@ -42,20 +48,15 @@ public class Model {
 		startBlockedTimeI2=0.0;
 		blockedProportionI1=0.0;
 		blockedProportionI2=0.0;
-		//TODO: Initialize RNGs
-		RNGI1 = new RandomNumberGenerator(17,43,100,27,1.5);
-		RNGI2 = new RandomNumberGenerator(17,43,100,27,1.5);
-		RNGW1 = new RandomNumberGenerator(17,43,100,27,1.5);
-		RNGW2 = new RandomNumberGenerator(17,43,100,27,1.5);
-		RNGW3 = new RandomNumberGenerator(17,43,100,27,1.5);
-
-		//Create first Finish Inspection events for both inspectors (initial state of simulation)
-		scheduleEvent(Event.eventType.FI, new Component(1, Component.serviceType.INSPECTOR), Event.eventLocation.I1);    //Inspector 1
-		randomNum = new Random();
-		scheduleEvent(Event.eventType.FI, new Component(randomNum.nextInt(2)+2,
-				Component.serviceType.INSPECTOR), Event.eventLocation.I2);   //Inspector 2
-		isI1Busy=true;
-		isI2Busy=true;
+		double a = 3000*sqrt(6003);
+		RNGC1 = new RandomNumberGenerator(a,0,3001,seeds[0],0.09654);
+		RNGC2 = new RandomNumberGenerator(a,0,3001,seeds[1],0.064363);
+		RNGC3 = new RandomNumberGenerator(a,0,3001,seeds[2],0.048467);
+		RNGW1 = new RandomNumberGenerator(a,0,3001,seeds[3],0.217182777);
+		RNGW2 = new RandomNumberGenerator(a,0,3001,seeds[4],0.09015);
+		RNGW3 = new RandomNumberGenerator(a,0,3001,seeds[5],0.113693469);
+		isI1Busy=false;
+		isI2Busy=false;
 	}
 
 	/**
@@ -63,14 +64,18 @@ public class Model {
 	 * @param location - use the location to determine which distribution to use
 	 * @return - return a random number variate
 	 */
-	public static double getRandomTime(Event.eventLocation location){
+	public static double getRandomTime(Event.eventLocation location, Component component){
 		double time = -1.0;
 		switch (location){
 			case I1:
-				time = RNGI1.generateRandomVariate();
+				time = RNGC1.generateRandomVariate();
 				break;
 			case I2:
-				time = RNGI2.generateRandomVariate();
+				if(component.getId() == 2){
+					time = RNGC2.generateRandomVariate();
+				} else{
+					time = RNGC3.generateRandomVariate();
+				}
 				break;
 			case W1:
 				time = RNGW1.generateRandomVariate();
@@ -88,13 +93,20 @@ public class Model {
 	/**
 	 * Constructor to be used for testing
 	 */
-	public Model(){
-		initialize();
+	public Model(int[] args){
+		initialize(args);
 	}
 
-	public static void main(String[] args) {
+	public static void runSimulation(int[] args) {
 		Event nextEvent = null;
-		initialize();
+		initialize(args);
+		//Create first Finish Inspection events for both inspectors (initial state of simulation)
+		scheduleEvent(Event.eventType.FI, new Component(1, Component.serviceType.INSPECTOR), Event.eventLocation.I1);    //Inspector 1
+		randomNum = new Random();
+		scheduleEvent(Event.eventType.FI, new Component(randomNum.nextInt(2)+2,
+				Component.serviceType.INSPECTOR), Event.eventLocation.I2);   //Inspector 2
+		isI1Busy=true;
+		isI2Busy=true;
 
 		while(!FEL.isEmpty() && (clock<chosenTime)){
 			nextEvent = FEL.poll();
@@ -147,7 +159,7 @@ public class Model {
 	public static void scheduleEvent(Event.eventType type, Component component, Event.eventLocation location){
 		double time = 0.0;
 		
-		time = getRandomTime(location);
+		time = getRandomTime(location, component);
 
 		if(location == Event.eventLocation.I1 || location == Event.eventLocation.I2){
 			component.setWhichService(Component.serviceType.INSPECTOR);
@@ -358,7 +370,6 @@ public class Model {
 		return componentAdded;
 	}
 
-	//TODO: Implement and add other print statements
 	private static void generateReport(){
 		System.out.println("*** Final Report ***");
 		System.out.println("Total product count: "+productCount);
@@ -566,20 +577,28 @@ public class Model {
 		Model.randomNum = randomNum;
 	}
 
-	public static RandomNumberGenerator getRNGI1() {
-		return RNGI1;
+	public static RandomNumberGenerator getRNGC1() {
+		return RNGC1;
 	}
 
-	public static void setRNGI1(RandomNumberGenerator RNGI1) {
-		Model.RNGI1 = RNGI1;
+	public static void setRNGC1(RandomNumberGenerator RNGC1) {
+		Model.RNGC1 = RNGC1;
 	}
 
-	public static RandomNumberGenerator getRNGI2() {
-		return RNGI2;
+	public static RandomNumberGenerator getRNGC2() {
+		return RNGC2;
 	}
 
-	public static void setRNGI2(RandomNumberGenerator RNGI2) {
-		Model.RNGI2 = RNGI2;
+	public static void setRNGC2(RandomNumberGenerator RNGC2) {
+		Model.RNGC2 = RNGC2;
+	}
+
+	public static RandomNumberGenerator getRNGC3() {
+		return RNGC3;
+	}
+
+	public static void setRNGC3(RandomNumberGenerator RNGC3) {
+		Model.RNGC3 = RNGC3;
 	}
 
 	public static RandomNumberGenerator getRNGW1() {

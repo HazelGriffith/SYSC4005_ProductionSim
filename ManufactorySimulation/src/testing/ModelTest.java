@@ -13,7 +13,8 @@ public class ModelTest {
     private Model model;
     @Before
     public void setUp() throws Exception {
-        model = new Model();
+        int[] args = {1234,1234,1234,1234,1234,1234};
+        model = new Model(args);
     }
 
     @After
@@ -22,11 +23,15 @@ public class ModelTest {
 
     @Test
     public void getRandomTime() {
-        assertEquals(0, model.getRandomTime(Event.eventLocation.I1));
-        assertEquals(0, model.getRandomTime(Event.eventLocation.I2));
-        assertEquals(0, model.getRandomTime(Event.eventLocation.W1));
-        assertEquals(0, model.getRandomTime(Event.eventLocation.W2));
-        assertEquals(0, model.getRandomTime(Event.eventLocation.W3));
+        Component component1 = new Component(1, Component.serviceType.INSPECTOR);
+        Component component2 = new Component(2, Component.serviceType.INSPECTOR);
+        Component component3 = new Component(3, Component.serviceType.INSPECTOR);
+        assertEquals(13.82613, model.getRandomTime(Event.eventLocation.I1, component1),0.05);
+        assertEquals(20.73822, model.getRandomTime(Event.eventLocation.I2, component2),0.05);
+        assertEquals(27.53986, model.getRandomTime(Event.eventLocation.I2, component3),0.05);
+        assertEquals(6.145856, model.getRandomTime(Event.eventLocation.W1, component1),0.05);
+        assertEquals(14.80615, model.getRandomTime(Event.eventLocation.W2, component2),0.05);
+        assertEquals(11.74011, model.getRandomTime(Event.eventLocation.W3, component3),0.05);
     }
 
     @Test
@@ -40,12 +45,12 @@ public class ModelTest {
 
     @Test
     public void scheduleEvent() {
-        assertEquals(2, model.getFEL().size());
+        assertEquals(0, model.getFEL().size());
         Event event = new Event(Event.eventType.FI, 2,new Component(1, Component.serviceType.INSPECTOR),
                 Event.eventLocation.I1);
         Component component = new Component(1, Component.serviceType.INSPECTOR);
         model.scheduleEvent(event.geteType(), component, event.getLocation());
-        assertEquals(3, model.getFEL().size());
+        assertEquals(1, model.getFEL().size());
     }
 
     @Test

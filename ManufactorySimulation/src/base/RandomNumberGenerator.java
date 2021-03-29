@@ -23,6 +23,7 @@ public class RandomNumberGenerator {
 
     public double generateRandomVariate(){
         double random = generateRandomNumber();
-        return (-1/lambda)*Math.log(random);
+        double v = (-1/lambda)*Math.log(random);
+        return v;
     }
 }
