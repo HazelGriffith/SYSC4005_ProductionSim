@@ -77,6 +77,18 @@ public class ModelTest {
 
     @Test
     public void processFIEvent() {
+        Event event = new Event(Event.eventType.FI, 2.0,new Component(1, Component.serviceType.INSPECTOR),
+                Event.eventLocation.I1);
+        model.processFIEvent(event);
+        assertEquals(0, model.getBufferC1W1().size());
+        //FI and EA event added
+        assertEquals(2, model.getFEL().size());
+        Event event2 = new Event(Event.eventType.FI, 2.0,new Component(3, Component.serviceType.INSPECTOR),
+                Event.eventLocation.I2);
+        model.processFIEvent(event);
+        assertEquals(0, model.getBufferC3W3().size());
+        //FI event added
+        assertEquals(3, model.getFEL().size());
     }
 
     @Test
@@ -94,6 +106,22 @@ public class ModelTest {
 
     @Test
     public void checkToUnblockInspectors() {
+        //I1 blocked
+        model.setIsI1Blocked(true);
+        model.setBlockedI1Component(new Component(1, Component.serviceType.BLOCKING));
+        model.checkToUnblockInspectors();
+        assertFalse(model.isIsI1Blocked());
+        assertEquals(null, model.getBlockedI1Component());
+        assertEquals(0, model.getStartBlockedTimeI1(), 0.05);
+        assertEquals(1, model.getBufferC1W1().size());
+        //I2 blocked
+        model.setIsI2Blocked(true);
+        model.setBlockedI2Component(new Component(2, Component.serviceType.BLOCKING));
+        model.checkToUnblockInspectors();
+        assertFalse(model.isIsI2Blocked());
+        assertEquals(null, model.getBlockedI2Component());
+        assertEquals(0, model.getStartBlockedTimeI2(), 0.05);
+        assertEquals(1, model.getBufferC2W2().size());
     }
 
     @Test

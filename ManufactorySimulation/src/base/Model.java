@@ -1,4 +1,6 @@
 /**
+ * This class is used to run the simulation and implement the logic behind it. It access different classes that represent
+ * entities in the system.
  * @author Sonia Hassan-Legault, 101054542
  */
 package base;
@@ -57,6 +59,7 @@ public class Model {
 		RNGW3 = new RandomNumberGenerator(a,0,3001,seeds[5],0.113693469);
 		isI1Busy=false;
 		isI2Busy=false;
+		randomNum = new Random();
 	}
 
 	/**
@@ -97,12 +100,16 @@ public class Model {
 		initialize(args);
 	}
 
+	/**
+	 * Runs a while loops that moves the simulation forward. Calls the initialization method and the report generating
+	 * methods.
+	 * @param args - int[] representing the seeds for the Random Number Generators
+	 */
 	public static void runSimulation(int[] args) {
 		Event nextEvent = null;
 		initialize(args);
 		//Create first Finish Inspection events for both inspectors (initial state of simulation)
 		scheduleEvent(Event.eventType.FI, new Component(1, Component.serviceType.INSPECTOR), Event.eventLocation.I1);    //Inspector 1
-		randomNum = new Random();
 		scheduleEvent(Event.eventType.FI, new Component(randomNum.nextInt(2)+2,
 				Component.serviceType.INSPECTOR), Event.eventLocation.I2);   //Inspector 2
 		isI1Busy=true;
