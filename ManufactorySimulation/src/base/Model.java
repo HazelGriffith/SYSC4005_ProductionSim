@@ -459,6 +459,7 @@ public class Model {
 		fileEditor.writeToFile("*** Final Report ***");
 		fileEditor.writeToFile("Initial RNG seeds: "+seeds[0]+", "+seeds[1]+", "+seeds[2]+", "+seeds[3]+", "
 		+seeds[4]+", "+seeds[5]);
+		fileEditor.writeToFile("Chosen duration of simulation: "+chosenTime+" minutes");
 		fileEditor.writeToFile("Total product count: "+productCount);
 		fileEditor.writeToFile("Total time Inspector 1 was blocked: "+totalBlockedTimeI1);
 		fileEditor.writeToFile("Total time Inspector 2 was blocked: "+totalBlockedTimeI2);
