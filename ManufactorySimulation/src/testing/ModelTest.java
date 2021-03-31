@@ -126,6 +126,44 @@ public class ModelTest {
 
     @Test
     public void checkToScheduleEAEvent() {
+        //Workstation 1
+        model.setIsW1Busy(false);
+        Component component = new Component(1, Component.serviceType.INSPECTOR);
+        model.selectC1Buffer(component);
+        Event event = new Event(Event.eventType.EA, 2,new Component(1, Component.serviceType.WORKSTATION),
+                Event.eventLocation.W1);
+        model.checkToScheduleEAEvent(event);
+        assertTrue(model.isIsW1Busy());
+        assertEquals(0,model.getBufferC1W1().size());
+        assertEquals(1, model.getFEL().size());
+
+        //Workstation 2
+        model.setIsW1Busy(true);
+        model.setIsW2Busy(false);
+        Component component2 = new Component(2, Component.serviceType.INSPECTOR);
+        model.addToBuffer(Model.bufferType.BC1W2,component);
+        model.addToBuffer(Model.bufferType.BC2W2,component2);
+        Event event2 = new Event(Event.eventType.EA, 2,new Component(2, Component.serviceType.WORKSTATION),
+                Event.eventLocation.W2);
+        model.checkToScheduleEAEvent(event2);
+        assertTrue(model.isIsW2Busy());
+        assertEquals(0,model.getBufferC1W1().size());
+        assertEquals(0,model.getBufferC2W2().size());
+        assertEquals(2, model.getFEL().size());
+        //Workstation 3
+        model.setIsW1Busy(true);
+        model.setIsW2Busy(true);
+        model.setIsW3Busy(false);
+        Component component3 = new Component(3, Component.serviceType.INSPECTOR);
+        model.addToBuffer(Model.bufferType.BC1W3,component);
+        model.addToBuffer(Model.bufferType.BC3W3,component3);
+        Event event3 = new Event(Event.eventType.EA, 2,new Component(3, Component.serviceType.WORKSTATION),
+                Event.eventLocation.W3);
+        model.checkToScheduleEAEvent(event3);
+        assertTrue(model.isIsW3Busy());
+        assertEquals(0,model.getBufferC1W1().size());
+        assertEquals(0,model.getBufferC3W3().size());
+        assertEquals(3, model.getFEL().size());
     }
 
     @Test
