@@ -14,7 +14,7 @@ public class ModelTest {
     @Before
     public void setUp() throws Exception {
         int[] args = {1234,1234,1234,1234,1234,1234};
-        model = new Model(args);
+        model = new Model(args, 720);
     }
 
     @After
@@ -35,10 +35,10 @@ public class ModelTest {
     }
 
     @Test
-    public void getBlockedProportions() {
+    public void getFinalStats() {
         model.setTotalBlockedTimeI1(10.0);
         model.setTotalBlockedTimeI2(720.0);
-        model.getBlockedProportions();
+        model.getFinalStats();
         assertEquals(0.0138, model.getBlockedProportionI1(), 0.005);
         assertEquals(1, model.getBlockedProportionI2(), 0.005);
     }

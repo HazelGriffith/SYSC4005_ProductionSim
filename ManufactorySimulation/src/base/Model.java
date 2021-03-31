@@ -2,6 +2,7 @@
  * This class is used to run the simulation and implement the logic behind it. It access different classes that represent
  * entities in the system.
  * @author Sonia Hassan-Legault, 101054542
+ * @author Hazel,
  */
 package base;
 
@@ -18,9 +19,15 @@ public class Model {
 	private static Component blockedI1Component, blockedI2Component;
 
 	private static boolean isI1Busy, isI2Busy, isW1Busy, isW2Busy, isW3Busy, isI1Blocked, isI2Blocked;
-	private static double blockedProportionI1, blockedProportionI2;
+	private static double blockedProportionI1, blockedProportionI2, totalInspectionTimeC1,totalInspectionTimeC2,
+			totalInspectionTimeC3, totalAssemblyTimeW1, totalAssemblyTimeW2, totalAssemblyTimeW3;
+	private static int totalC1Inspected, totalC2Inspected, totalC3Inspected, totalAssembledW1, totalAssembledW2,
+			totalAssembledW3;
+	private static double averageInspectionTimeC1, averageInspectionTimeC2, averageInspectionTimeC3,
+			averageAssemblyTimeW1, averageAssemblyTimeW2, averageAssemblyTimeW3;
 	private static Random randomNum;
 	private static RandomNumberGenerator RNGC1, RNGC2, RNGC3, RNGW1, RNGW2, RNGW3;
+	private static int[] seeds;
 
 	public static enum bufferType{BC1W1, BC1W2, BC1W3, BC2W2, BC3W3};
 	private static FileEditor fileEditor;
@@ -28,15 +35,15 @@ public class Model {
 	 * Initialize all the variables to their initial states and prime the simulation (both inspectors start inspecting
 	 * components).
 	 */
-	public static void initialize(int[] args) {
-		int[] seeds = new int[6];
+	public static void initialize(int[] args, double totalSimTime) {
+		seeds = new int[6];
 		for(int i = 0; i < args.length; i++) {
 			seeds[i] = args[i];
 		}
 		FEL = new PriorityQueue<Event>();
 		clock=0.0;
 		productCount=0;
-		chosenTime=60*12;
+		chosenTime=totalSimTime;
 		bufferC1W1 = new ArrayList<>();
 		bufferC1W2 = new ArrayList<>();
 		bufferC1W3 = new ArrayList<>();
@@ -61,6 +68,24 @@ public class Model {
 		isI1Busy=false;
 		isI2Busy=false;
 		randomNum = new Random();
+		totalInspectionTimeC1=0.0;
+		totalInspectionTimeC2=0.0;
+		totalInspectionTimeC3=0.0;
+		totalAssemblyTimeW1=0.0;
+		totalAssemblyTimeW2=0.0;
+		totalAssemblyTimeW3=0.0;
+		totalC1Inspected=0;
+		totalC2Inspected=0;
+		totalC3Inspected=0;
+		totalAssembledW1=0;
+		totalAssembledW2=0;
+		totalAssembledW3=0;
+		averageInspectionTimeC1=0.0;
+		averageInspectionTimeC2=0.0;
+		averageInspectionTimeC3=0.0;
+		averageAssemblyTimeW1=0.0;
+		averageAssemblyTimeW2=0.0;
+		averageAssemblyTimeW3=0.0;
 	}
 
 	/**
@@ -91,27 +116,64 @@ public class Model {
 				time = RNGW3.generateRandomVariate();
 				break;
 		}
+		updateStats(time, location, component);
 		return time;
+	}
+
+	private static void updateStats(double time, Event.eventLocation location, Component component) {
+		if(time+clock<chosenTime){
+			switch (location){
+				case I1:
+					totalInspectionTimeC1 += time;
+					totalC1Inspected++;
+					break;
+				case I2:
+					if(component.getId() == 2){
+						totalInspectionTimeC2 += time;
+						totalC2Inspected++;
+					} else{
+						totalInspectionTimeC3 += time;
+						totalC3Inspected++;
+					}
+					break;
+				case W1:
+					totalAssemblyTimeW1 += time;
+					totalAssembledW1++;
+					break;
+				case W2:
+					totalAssemblyTimeW2 += time;
+					totalAssembledW2++;
+					break;
+				case W3:
+					totalAssemblyTimeW3 += time;
+					totalAssembledW3++;
+					break;
+			}
+		}
+
 	}
 
 	/**
 	 * Constructor to be used for testing
 	 */
-	public Model(int[] args){
-		initialize(args);
+	public Model(int[] args, double totalSimTime){
+		initialize(args, totalSimTime);
 	}
 
 	/**
 	 * Runs a while loops that moves the simulation forward. Calls the initialization method and the report generating
 	 * methods.
 	 * @param args - int[] representing the seeds for the Random Number Generators
+	 * @param  totalSimTime - the amount of time, in minutes, that the simulation will run
 	 */
-	public static void runSimulation(int[] args) {
-		Event nextEvent = null;
-		initialize(args);
+	public static void runSimulation(int[] args, int totalSimTime) {
+		//Create a text file to hold the output statistics for this simulation run
 		String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date());
 		fileEditor = new FileEditor("Results\\"+timeStamp);
 		fileEditor.createNewFile();
+
+		Event nextEvent = null;
+		initialize(args, totalSimTime);
 		//Create first Finish Inspection events for both inspectors (initial state of simulation)
 		scheduleEvent(Event.eventType.FI, new Component(1, Component.serviceType.INSPECTOR), Event.eventLocation.I1);    //Inspector 1
 		scheduleEvent(Event.eventType.FI, new Component(randomNum.nextInt(2)+2,
@@ -130,14 +192,14 @@ public class Model {
 				processEvent(nextEvent);
 			}
 		}
-		getBlockedProportions();
+		getFinalStats();
 		generateReport();
 	}
 
 	/**
 	 * Calculate the proportion of time that the inspectors were blocked throughout the simulation.
 	 */
-	public static void getBlockedProportions() {
+	public static void getFinalStats() {
 		if(startBlockedTimeI2 != 0.0){
 			totalBlockedTimeI2 += clock - startBlockedTimeI2;
 		}
@@ -146,6 +208,12 @@ public class Model {
 		}
 		blockedProportionI1 = totalBlockedTimeI1/chosenTime;
 		blockedProportionI2 = totalBlockedTimeI2/chosenTime;
+		averageInspectionTimeC1 = totalInspectionTimeC1/totalC1Inspected;
+		averageInspectionTimeC2 = totalInspectionTimeC2/totalC2Inspected;
+		averageInspectionTimeC3 = totalInspectionTimeC3/totalC3Inspected;
+		averageAssemblyTimeW1 = totalAssemblyTimeW1/totalAssembledW1;
+		averageAssemblyTimeW2 = totalAssemblyTimeW2/totalAssembledW2;
+		averageAssemblyTimeW3 = totalAssemblyTimeW3/totalAssembledW3;
 	}
 
 	/**
@@ -385,13 +453,19 @@ public class Model {
 
 	private static void generateReport(){
 		fileEditor.writeToFile("*** Final Report ***");
+		fileEditor.writeToFile("Initial RNG seeds: "+seeds[0]+", "+seeds[1]+", "+seeds[2]+", "+seeds[3]+", "
+		+seeds[4]+", "+seeds[5]);
 		fileEditor.writeToFile("Total product count: "+productCount);
+		fileEditor.writeToFile("Total time Inspector 1 was blocked: "+totalBlockedTimeI1);
+		fileEditor.writeToFile("Total time Inspector 2 was blocked: "+totalBlockedTimeI2);
 		fileEditor.writeToFile("Total proportion Inspector 1 was blocked: "+blockedProportionI1);
 		fileEditor.writeToFile("Total proportion Inspector 2 was blocked: "+blockedProportionI2);
-		System.out.println("*** Final Report ***");
-		System.out.println("Total product count: "+productCount);
-		System.out.println("Total proportion Inspector 1 was blocked: "+blockedProportionI1);
-		System.out.println("Total proportion Inspector 2 was blocked: "+blockedProportionI2);
+		fileEditor.writeToFile("Average inspection time for Component 1: "+averageInspectionTimeC1);
+		fileEditor.writeToFile("Average inspection time for Component 2: "+averageInspectionTimeC2);
+		fileEditor.writeToFile("Average inspection time for Component 3: "+averageInspectionTimeC3);
+		fileEditor.writeToFile("Average assembly time for Workstation 1: "+averageAssemblyTimeW1);
+		fileEditor.writeToFile("Average assembly time for Workstation 2: "+averageAssemblyTimeW2);
+		fileEditor.writeToFile("Average assembly time for Workstation 3: "+averageAssemblyTimeW3);
 	}
 
 	public static int getProductCount() {
