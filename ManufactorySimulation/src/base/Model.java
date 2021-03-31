@@ -5,6 +5,7 @@
  */
 package base;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static java.lang.Math.sqrt;
@@ -22,6 +23,7 @@ public class Model {
 	private static RandomNumberGenerator RNGC1, RNGC2, RNGC3, RNGW1, RNGW2, RNGW3;
 
 	public static enum bufferType{BC1W1, BC1W2, BC1W3, BC2W2, BC3W3};
+	private static FileEditor fileEditor;
 	/**
 	 * Initialize all the variables to their initial states and prime the simulation (both inspectors start inspecting
 	 * components).
@@ -30,7 +32,6 @@ public class Model {
 		int[] seeds = new int[6];
 		for(int i = 0; i < args.length; i++) {
 			seeds[i] = args[i];
-			System.out.println(seeds[i]);
 		}
 		FEL = new PriorityQueue<Event>();
 		clock=0.0;
@@ -108,6 +109,9 @@ public class Model {
 	public static void runSimulation(int[] args) {
 		Event nextEvent = null;
 		initialize(args);
+		String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date());
+		fileEditor = new FileEditor("Results\\"+timeStamp);
+		fileEditor.createNewFile();
 		//Create first Finish Inspection events for both inspectors (initial state of simulation)
 		scheduleEvent(Event.eventType.FI, new Component(1, Component.serviceType.INSPECTOR), Event.eventLocation.I1);    //Inspector 1
 		scheduleEvent(Event.eventType.FI, new Component(randomNum.nextInt(2)+2,
@@ -117,6 +121,8 @@ public class Model {
 
 		while(!FEL.isEmpty() && (clock<chosenTime)){
 			nextEvent = FEL.poll();
+			fileEditor.writeToFile("Clock is: "+clock);
+			fileEditor.writeToFile(nextEvent.toString());
 			System.out.println("Clock is: "+clock);
 			System.out.println(nextEvent);
 			if(nextEvent != null){
@@ -378,6 +384,10 @@ public class Model {
 	}
 
 	private static void generateReport(){
+		fileEditor.writeToFile("*** Final Report ***");
+		fileEditor.writeToFile("Total product count: "+productCount);
+		fileEditor.writeToFile("Total proportion Inspector 1 was blocked: "+blockedProportionI1);
+		fileEditor.writeToFile("Total proportion Inspector 2 was blocked: "+blockedProportionI2);
 		System.out.println("*** Final Report ***");
 		System.out.println("Total product count: "+productCount);
 		System.out.println("Total proportion Inspector 1 was blocked: "+blockedProportionI1);
