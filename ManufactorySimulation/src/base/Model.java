@@ -208,12 +208,12 @@ public class Model {
 		}
 		blockedProportionI1 = totalBlockedTimeI1/chosenTime;
 		blockedProportionI2 = totalBlockedTimeI2/chosenTime;
-		averageInspectionTimeC1 = totalInspectionTimeC1/totalC1Inspected;
-		averageInspectionTimeC2 = totalInspectionTimeC2/totalC2Inspected;
-		averageInspectionTimeC3 = totalInspectionTimeC3/totalC3Inspected;
-		averageAssemblyTimeW1 = totalAssemblyTimeW1/totalAssembledW1;
-		averageAssemblyTimeW2 = totalAssemblyTimeW2/totalAssembledW2;
-		averageAssemblyTimeW3 = totalAssemblyTimeW3/totalAssembledW3;
+		if(totalC1Inspected != 0.0){averageInspectionTimeC1 = totalInspectionTimeC1/totalC1Inspected;}
+		if(totalC2Inspected != 0.0){averageInspectionTimeC2 = totalInspectionTimeC2/totalC2Inspected;}
+		if(totalC3Inspected != 0.0){averageInspectionTimeC3 = totalInspectionTimeC3/totalC3Inspected;}
+		if(totalAssembledW1 != 0.0){averageAssemblyTimeW1 = totalAssemblyTimeW1/totalAssembledW1;}
+		if(totalAssembledW2 != 0.0){averageAssemblyTimeW2 = totalAssemblyTimeW2/totalAssembledW2;}
+		if(totalAssembledW3 != 0.0){averageAssemblyTimeW3 = totalAssemblyTimeW3/totalAssembledW3;}
 	}
 
 	/**
@@ -247,8 +247,12 @@ public class Model {
 		} else{
 			component.setWhichService(Component.serviceType.WORKSTATION);
 		}
-		Event newEvent = new Event(type, time+clock, component, location);
-		FEL.offer(newEvent);
+		if(time+clock > chosenTime && type == Event.eventType.FI){
+			System.out.println("Event blocked from being scheduled.");
+		} else {
+			Event newEvent = new Event(type, time + clock, component, location);
+			FEL.offer(newEvent);
+		}
 	}
 
 	public static void processEAEvent(Event event) {
