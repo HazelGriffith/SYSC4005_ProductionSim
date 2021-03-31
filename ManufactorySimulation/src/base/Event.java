@@ -24,7 +24,9 @@ public class Event implements Comparable<Event>{
 	}
 	
 	public int compareTo(Event e) {
-		return (int) (this.getTime() - e.getTime());
+		int current = (int)(this.getTime()*60);
+		int event = (int)(e.getTime()*60);
+		return current-event;
 	}
 	
 	public String toString() {
