@@ -2,7 +2,7 @@
  * This class is used to run the simulation and implement the logic behind it. It access different classes that represent
  * entities in the system.
  * @author Sonia Hassan-Legault, 101054542
- * @author Hazel,
+ * @author Hazel Griffith, 100997489
  */
 package base;
 
@@ -12,6 +12,7 @@ import java.util.*;
 import static java.lang.Math.sqrt;
 
 public class Model {
+	private static int T0 = 150;
 	private static int productCount;
 	private static double clock, chosenTime, totalBlockedTimeI1, totalBlockedTimeI2, startBlockedTimeI1, startBlockedTimeI2;
 	private static Queue<Event> FEL;
@@ -116,7 +117,9 @@ public class Model {
 				time = RNGW3.generateRandomVariate();
 				break;
 		}
-		updateStats(time, location, component);
+		if (clock > T0) {
+			updateStats(time, location, component);
+		}
 		return time;
 	}
 
@@ -166,7 +169,7 @@ public class Model {
 	 * @param args - int[] representing the seeds for the Random Number Generators
 	 * @param  totalSimTime - the amount of time, in minutes, that the simulation will run
 	 */
-	public static void runSimulation(int[] args, int totalSimTime) {
+	public static double[] runSimulation(int[] args, int totalSimTime) {
 		//Create a text file to hold the output statistics for this simulation run
 		String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date());
 		fileEditor = new FileEditor("Results\\"+timeStamp);
@@ -183,8 +186,10 @@ public class Model {
 
 		while(!FEL.isEmpty() && (clock<chosenTime)){
 			nextEvent = FEL.poll();
-			fileEditor.writeToFile("Clock is: "+clock);
-			fileEditor.writeToFile(nextEvent.toString());
+			if (clock > T0) {
+				fileEditor.writeToFile("Clock is: "+clock);
+				fileEditor.writeToFile(nextEvent.toString());
+			}
 			System.out.println("Clock is: "+clock);
 			System.out.println(nextEvent);
 			if(nextEvent != null){
@@ -194,6 +199,11 @@ public class Model {
 		}
 		getFinalStats();
 		generateReport();
+		double[] results = new double[3];
+		results[0] = productCount;
+		results[1] = blockedProportionI1;
+		results[2] = blockedProportionI2;
+		return results;
 	}
 
 	/**
@@ -256,7 +266,9 @@ public class Model {
 	}
 
 	public static void processEAEvent(Event event) {
-		productCount++;
+		if (clock > T0) {
+			productCount++;
+		}
 		if(event.getLocation() == Event.eventLocation.W1){
 			isW1Busy=false;
 		} else if(event.getLocation() == Event.eventLocation.W2){
@@ -354,7 +366,9 @@ public class Model {
 			if (result) {
 				isI1Blocked = false;
 				blockedI1Component = null;
-				totalBlockedTimeI1 += clock - startBlockedTimeI1;
+				if (clock > T0) {
+					totalBlockedTimeI1 += clock - startBlockedTimeI1;
+				}
 				startBlockedTimeI1 = 0;
 				result = false;
 				scheduleEvent(Event.eventType.FI, new Component(1, Component.serviceType.INSPECTOR), Event.eventLocation.I1);
@@ -375,7 +389,9 @@ public class Model {
 			if (result) {
 				isI2Blocked = false;
 				blockedI2Component = null;
-				totalBlockedTimeI2 += clock - startBlockedTimeI2;
+				if (clock > T0) {
+					totalBlockedTimeI2 += clock - startBlockedTimeI2;
+				}
 				startBlockedTimeI2 = 0;
 				result = false;
 				scheduleEvent(Event.eventType.FI, new Component(randomNum.nextInt(2)+2, Component.serviceType.INSPECTOR), Event.eventLocation.I1);
