@@ -1,0 +1,664 @@
+Clock is: 155.71980819504697
+event type is: FI Time of Event is: 157.34923682682873 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 157.34923682682873
+event type is: EA Time of Event is: 160.37302949108994 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 160.37302949108994
+event type is: FI Time of Event is: 165.68956659895258 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 165.68956659895258
+event type is: EA Time of Event is: 166.57747987610713 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 166.57747987610713
+event type is: EA Time of Event is: 167.07968621804662 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 167.07968621804662
+event type is: FI Time of Event is: 171.22284311870496 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 171.22284311870496
+event type is: EA Time of Event is: 172.87172889309107 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 172.87172889309107
+event type is: FI Time of Event is: 176.59698502581315 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 176.59698502581315
+event type is: EA Time of Event is: 178.21666324024383 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 178.21666324024383
+event type is: FI Time of Event is: 178.5147848875285 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 178.5147848875285
+event type is: EA Time of Event is: 180.82767875951933 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 180.82767875951933
+event type is: FI Time of Event is: 184.39316189687221 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 184.39316189687221
+event type is: EA Time of Event is: 188.33239121409 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 188.33239121409
+event type is: FI Time of Event is: 196.33792296001155 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 196.33792296001155
+event type is: EA Time of Event is: 196.64125504826862 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 196.64125504826862
+event type is: FI Time of Event is: 197.87176334601173 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 197.87176334601173
+event type is: EA Time of Event is: 198.01126597316699 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 198.01126597316699
+event type is: FI Time of Event is: 204.0243192228028 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 204.0243192228028
+event type is: EA Time of Event is: 207.99188153016465 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 207.99188153016465
+event type is: FI Time of Event is: 261.1661507406801 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 261.1661507406801
+event type is: EA Time of Event is: 261.91533776058196 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 261.91533776058196
+event type is: FI Time of Event is: 270.7095523430453 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 270.7095523430453
+event type is: EA Time of Event is: 272.5102871155918 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 272.5102871155918
+event type is: FI Time of Event is: 279.8281917032381 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 279.8281917032381
+event type is: EA Time of Event is: 280.2690412979833 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 280.2690412979833
+event type is: FI Time of Event is: 283.26590412285356 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 283.26590412285356
+event type is: EA Time of Event is: 285.64586105094764 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 285.64586105094764
+event type is: FI Time of Event is: 299.0076897690582 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 299.0076897690582
+event type is: EA Time of Event is: 300.8998892066128 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 300.8998892066128
+event type is: FI Time of Event is: 308.55188780831594 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 308.55188780831594
+event type is: EA Time of Event is: 308.66781925416154 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 308.66781925416154
+event type is: FI Time of Event is: 320.9495702552365 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 320.9495702552365
+event type is: EA Time of Event is: 322.11492313261084 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 322.11492313261084
+event type is: FI Time of Event is: 363.03225993998984 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 363.03225993998984
+event type is: EA Time of Event is: 363.6964986121578 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 363.6964986121578
+event type is: FI Time of Event is: 367.49869017969155 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 367.49869017969155
+event type is: EA Time of Event is: 368.1737146224391 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 368.1737146224391
+event type is: FI Time of Event is: 370.61036612584087 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 370.61036612584087
+event type is: FI Time of Event is: 376.60461999400025 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 376.60461999400025
+event type is: EA Time of Event is: 382.25363798671225 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 382.25363798671225
+event type is: EA Time of Event is: 385.81970410943546 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 385.81970410943546
+event type is: FI Time of Event is: 387.20902580020794 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 387.20902580020794
+event type is: FI Time of Event is: 387.4894878073126 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 387.4894878073126
+event type is: EA Time of Event is: 390.67167916420533 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 390.67167916420533
+event type is: EA Time of Event is: 390.705549258733 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 390.705549258733
+event type is: FI Time of Event is: 410.9765002599607 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 410.9765002599607
+event type is: EA Time of Event is: 413.69543503346506 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 413.69543503346506
+event type is: FI Time of Event is: 426.3013254933219 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 426.3013254933219
+event type is: EA Time of Event is: 438.85317951586984 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 438.85317951586984
+event type is: FI Time of Event is: 450.79409588140766 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 450.79409588140766
+event type is: EA Time of Event is: 454.6498455305738 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 454.6498455305738
+event type is: FI Time of Event is: 457.5099760086055 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 457.5099760086055
+event type is: EA Time of Event is: 460.41753575871974 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 460.41753575871974
+event type is: FI Time of Event is: 488.2479584890709 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 488.2479584890709
+event type is: FI Time of Event is: 500.6874829755214 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 500.6874829755214
+event type is: FI Time of Event is: 501.6849765099562 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 501.6849765099562
+event type is: FI Time of Event is: 503.8841641709707 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 503.8841641709707
+event type is: EA Time of Event is: 510.0026286666789 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 510.0026286666789
+event type is: EA Time of Event is: 513.9999526269439 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 513.9999526269439
+event type is: FI Time of Event is: 520.709701882779 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 520.709701882779
+event type is: EA Time of Event is: 521.280553041946 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 521.280553041946
+event type is: FI Time of Event is: 521.6535352472432 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 521.6535352472432
+event type is: EA Time of Event is: 522.5110926329362 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 522.5110926329362
+event type is: FI Time of Event is: 537.9556742573568 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 537.9556742573568
+event type is: EA Time of Event is: 539.1347706037363 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 539.1347706037363
+event type is: FI Time of Event is: 543.2911033596137 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 543.2911033596137
+event type is: FI Time of Event is: 544.7880456156499 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 544.7880456156499
+event type is: FI Time of Event is: 546.574685789056 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 546.574685789056
+event type is: FI Time of Event is: 548.4817015499568 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 548.4817015499568
+event type is: EA Time of Event is: 562.5911743337978 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 562.5911743337978
+event type is: EA Time of Event is: 563.7423487992671 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 563.7423487992671
+event type is: FI Time of Event is: 565.4176968639126 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 565.4176968639126
+event type is: EA Time of Event is: 567.7075162910701 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 567.7075162910701
+event type is: EA Time of Event is: 568.019591474898 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 568.019591474898
+event type is: FI Time of Event is: 568.382782136956 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 568.382782136956
+event type is: FI Time of Event is: 571.2026836539605 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 571.2026836539605
+event type is: FI Time of Event is: 572.5412495400808 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 572.5412495400808
+event type is: EA Time of Event is: 577.1253264558413 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 577.1253264558413
+event type is: EA Time of Event is: 583.650901134091 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 583.650901134091
+event type is: EA Time of Event is: 587.374134663739 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 587.374134663739
+event type is: FI Time of Event is: 596.4550918651863 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 596.4550918651863
+event type is: EA Time of Event is: 599.0808816485511 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 599.0808816485511
+event type is: EA Time of Event is: 601.1716773586109 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 601.1716773586109
+event type is: FI Time of Event is: 613.0364357464517 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 613.0364357464517
+event type is: EA Time of Event is: 619.2172659312109 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 619.2172659312109
+event type is: FI Time of Event is: 621.3289698919453 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 621.3289698919453
+event type is: EA Time of Event is: 623.8420289802639 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 623.8420289802639
+event type is: FI Time of Event is: 643.6819392182937 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 643.6819392182937
+event type is: EA Time of Event is: 644.2717117987381 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 644.2717117987381
+event type is: FI Time of Event is: 647.5005922083984 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 647.5005922083984
+event type is: FI Time of Event is: 650.8338207245555 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 650.8338207245555
+event type is: EA Time of Event is: 650.9766589500713 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 650.9766589500713
+event type is: EA Time of Event is: 657.284930625132 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 657.284930625132
+event type is: FI Time of Event is: 671.5903959053753 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 671.5903959053753
+event type is: FI Time of Event is: 681.5199717345695 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 681.5199717345695
+event type is: EA Time of Event is: 685.4655019061543 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 685.4655019061543
+event type is: EA Time of Event is: 685.7646743217729 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 685.7646743217729
+event type is: FI Time of Event is: 707.5219657601476 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 707.5219657601476
+event type is: EA Time of Event is: 709.455615461409 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 709.455615461409
+event type is: FI Time of Event is: 718.0621597699666 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 718.0621597699666
+event type is: EA Time of Event is: 718.7598612678867 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 718.7598612678867
+event type is: FI Time of Event is: 734.2130009186767 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 734.2130009186767
+event type is: EA Time of Event is: 734.9756583065907 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 734.9756583065907
+event type is: FI Time of Event is: 743.7267333068909 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 743.7267333068909
+event type is: EA Time of Event is: 745.8560510430873 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 745.8560510430873
+event type is: FI Time of Event is: 746.5261191596453 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 746.5261191596453
+event type is: FI Time of Event is: 747.9419499184453 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 747.9419499184453
+event type is: EA Time of Event is: 749.6438417525595 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 749.6438417525595
+event type is: EA Time of Event is: 751.1564828679562 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 751.1564828679562
+event type is: FI Time of Event is: 763.8287090600138 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 763.8287090600138
+event type is: FI Time of Event is: 768.2558221331788 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 768.2558221331788
+event type is: EA Time of Event is: 774.2337880744005 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 774.2337880744005
+event type is: EA Time of Event is: 776.020713823669 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 776.020713823669
+event type is: FI Time of Event is: 796.7802967842123 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 796.7802967842123
+event type is: FI Time of Event is: 803.0286716356034 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 803.0286716356034
+event type is: EA Time of Event is: 808.5383670895343 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 808.5383670895343
+event type is: EA Time of Event is: 808.797928257606 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 808.797928257606
+event type is: FI Time of Event is: 814.7280575450336 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 814.7280575450336
+event type is: EA Time of Event is: 817.2845577683717 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 817.2845577683717
+event type is: FI Time of Event is: 820.682032667401 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 820.682032667401
+event type is: EA Time of Event is: 826.393342535695 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 826.393342535695
+event type is: FI Time of Event is: 848.7363204726237 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 848.7363204726237
+event type is: FI Time of Event is: 848.825688471774 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 848.825688471774
+event type is: EA Time of Event is: 849.4837286431382 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 849.4837286431382
+event type is: FI Time of Event is: 859.9070955385289 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 859.9070955385289
+event type is: FI Time of Event is: 860.7156752606986 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 860.7156752606986
+event type is: EA Time of Event is: 873.5891738890274 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 873.5891738890274
+event type is: EA Time of Event is: 874.6419756616153 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 874.6419756616153
+event type is: EA Time of Event is: 877.965133727983 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 877.965133727983
+event type is: FI Time of Event is: 887.2592425640604 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 887.2592425640604
+event type is: EA Time of Event is: 891.3566509548273 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 891.3566509548273
+event type is: FI Time of Event is: 898.5224290846218 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 898.5224290846218
+event type is: FI Time of Event is: 902.1077468883254 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 902.1077468883254
+event type is: EA Time of Event is: 902.1110175617239 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 902.1110175617239
+event type is: EA Time of Event is: 903.8744830605546 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 903.8744830605546
+event type is: FI Time of Event is: 913.6783635993576 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 913.6783635993576
+event type is: EA Time of Event is: 916.842689832771 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 916.842689832771
+event type is: FI Time of Event is: 925.9387353820351 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 925.9387353820351
+event type is: EA Time of Event is: 929.804076223765 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 929.804076223765
+event type is: FI Time of Event is: 945.2224905782637 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 945.2224905782637
+event type is: EA Time of Event is: 953.0593894181985 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 953.0593894181985
+event type is: FI Time of Event is: 957.5641100458491 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 957.5641100458491
+event type is: EA Time of Event is: 957.975518941325 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 957.975518941325
+event type is: FI Time of Event is: 977.6260725085888 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 977.6260725085888
+event type is: FI Time of Event is: 980.019910741455 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 980.019910741455
+event type is: EA Time of Event is: 981.4905339791095 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 981.4905339791095
+event type is: FI Time of Event is: 981.9382426853966 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 981.9382426853966
+event type is: EA Time of Event is: 986.2148159060501 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 986.2148159060501
+event type is: FI Time of Event is: 986.4718161693208 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 986.4718161693208
+event type is: FI Time of Event is: 986.7270254316899 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 986.7270254316899
+event type is: EA Time of Event is: 989.1546573089494 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 989.1546573089494
+event type is: EA Time of Event is: 993.4469812150206 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 993.4469812150206
+event type is: EA Time of Event is: 995.3945978664262 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 995.3945978664262
+event type is: FI Time of Event is: 999.2713831513951 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 999.2713831513951
+event type is: FI Time of Event is: 1004.6705611400782 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1004.6705611400782
+event type is: EA Time of Event is: 1005.1902347217042 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1005.1902347217042
+event type is: FI Time of Event is: 1006.4679029891732 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1006.4679029891732
+event type is: FI Time of Event is: 1008.2638920882106 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1008.2638920882106
+event type is: EA Time of Event is: 1008.6473817228399 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1008.6473817228399
+event type is: FI Time of Event is: 1018.7874707458566 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1018.7874707458566
+event type is: EA Time of Event is: 1018.895429255491 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1018.895429255491
+event type is: EA Time of Event is: 1024.2352883493222 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1024.2352883493222
+event type is: EA Time of Event is: 1025.1219259541435 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1025.1219259541435
+event type is: FI Time of Event is: 1043.4631649018675 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1043.4631649018675
+event type is: EA Time of Event is: 1055.964968486165 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1055.964968486165
+event type is: FI Time of Event is: 1067.9419947218598 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1067.9419947218598
+event type is: FI Time of Event is: 1068.5215256435756 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1068.5215256435756
+event type is: EA Time of Event is: 1069.1340256092253 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1069.1340256092253
+event type is: FI Time of Event is: 1070.6914936448463 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1070.6914936448463
+event type is: EA Time of Event is: 1074.8926105863768 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1074.8926105863768
+event type is: FI Time of Event is: 1087.4424989951601 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1087.4424989951601
+event type is: EA Time of Event is: 1089.8895433447976 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1089.8895433447976
+event type is: FI Time of Event is: 1091.9373457373679 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1091.9373457373679
+event type is: EA Time of Event is: 1107.7636132638113 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1107.7636132638113
+event type is: EA Time of Event is: 1109.314771447601 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1109.314771447601
+event type is: FI Time of Event is: 1151.4335481884154 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1151.4335481884154
+event type is: FI Time of Event is: 1160.3080203670538 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1160.3080203670538
+event type is: FI Time of Event is: 1165.9141100525264 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1165.9141100525264
+event type is: EA Time of Event is: 1179.33281336921 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1179.33281336921
+event type is: FI Time of Event is: 1180.1918101997126 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1180.1918101997126
+event type is: FI Time of Event is: 1184.998558599579 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1184.998558599579
+event type is: EA Time of Event is: 1199.0075864815665 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1199.0075864815665
+event type is: FI Time of Event is: 1204.061816745175 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1204.061816745175
+event type is: EA Time of Event is: 1210.689975072615 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1210.689975072615
+event type is: EA Time of Event is: 1212.8433697168016 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1212.8433697168016
+event type is: FI Time of Event is: 1220.3516481137808 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1220.3516481137808
+event type is: EA Time of Event is: 1223.429554066212 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1223.429554066212
+event type is: EA Time of Event is: 1223.4497781490782 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1223.4497781490782
+event type is: EA Time of Event is: 1227.8032979080263 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1227.8032979080263
+event type is: FI Time of Event is: 1238.8430646534284 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1238.8430646534284
+event type is: FI Time of Event is: 1239.1835477425832 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1239.1835477425832
+event type is: EA Time of Event is: 1241.780026476959 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1241.780026476959
+event type is: EA Time of Event is: 1249.5763273718171 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1249.5763273718171
+event type is: FI Time of Event is: 1275.502191302387 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1275.502191302387
+event type is: FI Time of Event is: 1280.8653679235804 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1280.8653679235804
+event type is: EA Time of Event is: 1282.8574805867313 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1282.8574805867313
+event type is: EA Time of Event is: 1286.7681396988044 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1286.7681396988044
+event type is: FI Time of Event is: 1291.2707101064427 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1291.2707101064427
+event type is: EA Time of Event is: 1291.831980763556 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1291.831980763556
+event type is: FI Time of Event is: 1307.9647018990645 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1307.9647018990645
+event type is: EA Time of Event is: 1314.725636068317 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1314.725636068317
+event type is: FI Time of Event is: 1322.1116909734824 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1322.1116909734824
+event type is: FI Time of Event is: 1331.142879043096 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1331.142879043096
+event type is: FI Time of Event is: 1332.694292241645 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1332.694292241645
+event type is: FI Time of Event is: 1335.1533225743 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1335.1533225743
+event type is: EA Time of Event is: 1342.62689305712 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1342.62689305712
+event type is: EA Time of Event is: 1345.7086209460465 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1345.7086209460465
+event type is: EA Time of Event is: 1348.4546136452514 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1348.4546136452514
+event type is: FI Time of Event is: 1350.86640989126 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1350.86640989126
+event type is: EA Time of Event is: 1351.6384746627775 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1351.6384746627775
+event type is: FI Time of Event is: 1353.940562844059 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1353.940562844059
+event type is: EA Time of Event is: 1354.9329130981298 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1354.9329130981298
+event type is: EA Time of Event is: 1366.1976438733402 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1366.1976438733402
+event type is: FI Time of Event is: 1370.2377831043073 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1370.2377831043073
+event type is: FI Time of Event is: 1377.874882905264 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1377.874882905264
+event type is: EA Time of Event is: 1384.5741836737993 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1384.5741836737993
+event type is: FI Time of Event is: 1387.3472662678973 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1387.3472662678973
+event type is: EA Time of Event is: 1388.1181576284862 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1388.1181576284862
+event type is: FI Time of Event is: 1389.142408746116 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1389.142408746116
+event type is: EA Time of Event is: 1389.3460489961515 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1389.3460489961515
+event type is: EA Time of Event is: 1394.3324045755953 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1394.3324045755953
+event type is: FI Time of Event is: 1400.4314653878628 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1400.4314653878628
+event type is: FI Time of Event is: 1414.561754754608 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1414.561754754608
+event type is: EA Time of Event is: 1415.512147757888 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1415.512147757888
+event type is: EA Time of Event is: 1417.0341833690766 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1417.0341833690766
+event type is: FI Time of Event is: 1436.2680287826993 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1436.2680287826993
+event type is: FI Time of Event is: 1458.9311504147342 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1458.9311504147342
+event type is: FI Time of Event is: 1469.8806318618604 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1469.8806318618604
+event type is: EA Time of Event is: 1476.0804562639644 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1476.0804562639644
+event type is: EA Time of Event is: 1476.8521649579548 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1476.8521649579548
+event type is: EA Time of Event is: 1477.6818813346936 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1477.6818813346936
+event type is: FI Time of Event is: 1501.6496550142438 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1501.6496550142438
+event type is: EA Time of Event is: 1501.986548089063 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1501.986548089063
+event type is: FI Time of Event is: 1506.6526606250848 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1506.6526606250848
+event type is: FI Time of Event is: 1509.1917883762496 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1509.1917883762496
+event type is: EA Time of Event is: 1509.4205961182838 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1509.4205961182838
+event type is: EA Time of Event is: 1510.2806035631095 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1510.2806035631095
+event type is: FI Time of Event is: 1518.9787489195282 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1518.9787489195282
+event type is: FI Time of Event is: 1523.915037807868 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1523.915037807868
+event type is: EA Time of Event is: 1528.1442682763407 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1528.1442682763407
+event type is: FI Time of Event is: 1534.1880275693932 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1534.1880275693932
+event type is: EA Time of Event is: 1534.4813232934855 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1534.4813232934855
+event type is: EA Time of Event is: 1534.5018071802394 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1534.5018071802394
+event type is: FI Time of Event is: 1536.372460594207 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1536.372460594207
+event type is: EA Time of Event is: 1541.4621102254557 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1541.4621102254557
+event type is: FI Time of Event is: 1556.5866340576986 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1556.5866340576986
+event type is: FI Time of Event is: 1556.7342750382481 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1556.7342750382481
+event type is: FI Time of Event is: 1562.0152500716135 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1562.0152500716135
+event type is: FI Time of Event is: 1563.9951904085817 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1563.9951904085817
+event type is: EA Time of Event is: 1566.4382482906844 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1566.4382482906844
+event type is: EA Time of Event is: 1572.5595761096022 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1572.5595761096022
+event type is: EA Time of Event is: 1577.6532979657686 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1577.6532979657686
+event type is: FI Time of Event is: 1578.524572826965 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1578.524572826965
+event type is: EA Time of Event is: 1588.9240479815667 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1588.9240479815667
+event type is: EA Time of Event is: 1590.2564327018185 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1590.2564327018185
+event type is: FI Time of Event is: 1624.5218467956317 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1624.5218467956317
+event type is: EA Time of Event is: 1626.6108507887059 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1626.6108507887059
+event type is: FI Time of Event is: 1639.6332890919346 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1639.6332890919346
+event type is: FI Time of Event is: 1639.9522013533808 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1639.9522013533808
+event type is: FI Time of Event is: 1640.993879775826 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1640.993879775826
+event type is: EA Time of Event is: 1641.2124679736708 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1641.2124679736708
+event type is: EA Time of Event is: 1651.2502579229072 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1651.2502579229072
+event type is: FI Time of Event is: 1654.7203639619377 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1654.7203639619377
+event type is: FI Time of Event is: 1655.7691570971324 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1655.7691570971324
+event type is: FI Time of Event is: 1656.4205700916098 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1656.4205700916098
+event type is: EA Time of Event is: 1660.932994037467 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1660.932994037467
+event type is: FI Time of Event is: 1662.4882771651592 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1662.4882771651592
+event type is: EA Time of Event is: 1666.1247195708893 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1666.1247195708893
+event type is: EA Time of Event is: 1666.9300812492988 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1666.9300812492988
+event type is: EA Time of Event is: 1671.4649612094736 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1671.4649612094736
+event type is: EA Time of Event is: 1671.4830724726999 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1671.4830724726999
+event type is: FI Time of Event is: 1698.8321907387922 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1698.8321907387922
+event type is: EA Time of Event is: 1701.1586036441888 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1701.1586036441888
+event type is: FI Time of Event is: 1714.6938485542976 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1714.6938485542976
+event type is: FI Time of Event is: 1726.6862982973514 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1726.6862982973514
+event type is: EA Time of Event is: 1727.8012015841357 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1727.8012015841357
+event type is: FI Time of Event is: 1728.1579482293914 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1728.1579482293914
+event type is: EA Time of Event is: 1729.2831392914236 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1729.2831392914236
+event type is: EA Time of Event is: 1730.4314745356044 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1730.4314745356044
+event type is: FI Time of Event is: 1733.1035364276238 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1733.1035364276238
+event type is: FI Time of Event is: 1734.6635231807213 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1734.6635231807213
+event type is: EA Time of Event is: 1744.7856713570106 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1744.7856713570106
+event type is: EA Time of Event is: 1746.8463369809651 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1746.8463369809651
+event type is: FI Time of Event is: 1749.821789381944 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1749.821789381944
+event type is: EA Time of Event is: 1755.1898559692959 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1755.1898559692959
+event type is: FI Time of Event is: 1765.0108621905842 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1765.0108621905842
+event type is: EA Time of Event is: 1766.8005242614058 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1766.8005242614058
+event type is: FI Time of Event is: 1772.8591138732338 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1772.8591138732338
+event type is: EA Time of Event is: 1777.0461863835662 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1777.0461863835662
+event type is: FI Time of Event is: 1778.6414778432777 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1778.6414778432777
+event type is: EA Time of Event is: 1782.2789321669288 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1782.2789321669288
+event type is: FI Time of Event is: 1786.6772442052356 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1786.6772442052356
+event type is: FI Time of Event is: 1787.6165349738928 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1787.6165349738928
+event type is: EA Time of Event is: 1795.0815281366943 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1795.0815281366943
+event type is: FI Time of Event is: 1800.6636607237651 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1800.6636607237651
+event type is: EA Time of Event is: 1820.893275751228 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1820.893275751228
+event type is: FI Time of Event is: 1824.0691656443776 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1824.0691656443776
+event type is: EA Time of Event is: 1824.153383835243 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1824.153383835243
+event type is: EA Time of Event is: 1826.3244046000684 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1826.3244046000684
+event type is: FI Time of Event is: 1833.1369946433895 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1833.1369946433895
+event type is: EA Time of Event is: 1834.4400094682874 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1834.4400094682874
+event type is: FI Time of Event is: 1837.6183136795194 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1837.6183136795194
+event type is: FI Time of Event is: 1839.6519637781844 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1839.6519637781844
+event type is: EA Time of Event is: 1843.4733216230347 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1843.4733216230347
+event type is: EA Time of Event is: 1844.0713525455906 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1844.0713525455906
+event type is: FI Time of Event is: 1850.2332409848093 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1850.2332409848093
+event type is: FI Time of Event is: 1855.0566949654649 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1855.0566949654649
+event type is: EA Time of Event is: 1866.8192399230084 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1866.8192399230084
+event type is: EA Time of Event is: 1876.1448688745188 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1876.1448688745188
+event type is: FI Time of Event is: 1877.6446256322847 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1877.6446256322847
+event type is: FI Time of Event is: 1891.4243806893357 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1891.4243806893357
+event type is: EA Time of Event is: 1892.7172760564667 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1892.7172760564667
+event type is: EA Time of Event is: 1905.5803508539384 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1905.5803508539384
+event type is: FI Time of Event is: 1926.041943561274 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1926.041943561274
+event type is: EA Time of Event is: 1927.5546171133112 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1927.5546171133112
+event type is: FI Time of Event is: 1931.7855866627222 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1931.7855866627222
+event type is: EA Time of Event is: 1932.1423986010607 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1932.1423986010607
+event type is: FI Time of Event is: 1937.4249420618903 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1937.4249420618903
+event type is: EA Time of Event is: 1937.5132858778354 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1937.5132858778354
+event type is: FI Time of Event is: 1945.1479163335791 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1945.1479163335791
+event type is: EA Time of Event is: 1945.7045554244419 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1945.7045554244419
+event type is: FI Time of Event is: 1956.805957998036 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1956.805957998036
+event type is: EA Time of Event is: 1962.199657592637 Component is: C1 with service: WORKSTATION Event location is: W1
+Clock is: 1962.199657592637
+event type is: FI Time of Event is: 1999.5077822631652 Component is: C1 with service: INSPECTOR Event location is: I1
+Clock is: 1999.5077822631652
+event type is: EA Time of Event is: 2002.5391381787763 Component is: C1 with service: WORKSTATION Event location is: W1
+*** Final Report ***
+Initial RNG seeds: 1234, 1235, 1236, 1237, 1238, 1239
+Chosen duration of simulation: 2000.0 minutes
+Total product count: 163
+Total time Inspector 1 was blocked: 57.39623062553903
+Total time Inspector 2 was blocked: 1884.1090492060603
+Total proportion Inspector 1 was blocked: 0.028698115312769515
+Total proportion Inspector 2 was blocked: 0.9420545246030302
+Average inspection time for Component 1: 11.017051325992572
+Average inspection time for Component 2: 0.0
+Average inspection time for Component 3: 0.0
+Average assembly time for Workstation 1: 5.442296918604981
+Average assembly time for Workstation 2: 0.0
+Average assembly time for Workstation 3: 0.0
