@@ -12,26 +12,47 @@ import java.util.*;
 import static java.lang.Math.sqrt;
 
 public class Model {
+	
+	private static int alternateC1Selection = 0;
+	
+	//End time for the initialization phase
 	private static int T0 = 150;
+	//number of products made
 	private static int productCount;
+	
+	//clock is the current time, chosenTime is the simulation run time
 	private static double clock, chosenTime, totalBlockedTimeI1, totalBlockedTimeI2, startBlockedTimeI1, startBlockedTimeI2;
+	
 	private static Queue<Event> FEL;
+	
+	//These are the Component buffers
 	private static ArrayList<Component> bufferC1W1, bufferC1W2, bufferC1W3, bufferC2W2, bufferC3W3;
+	
+	//These are the components of blocked Inspectors
 	private static Component blockedI1Component, blockedI2Component;
 
-	private static boolean isI1Busy, isI2Busy, isW1Busy, isW2Busy, isW3Busy, isI1Blocked, isI2Blocked;
+	private static boolean isI1Busy, isI2Busy, isW1Busy, isW2Busy, isW3Busy, isI1Blocked, isI2Blocked, usingAltPolicy;
+	
 	private static double blockedProportionI1, blockedProportionI2, totalInspectionTimeC1,totalInspectionTimeC2,
 			totalInspectionTimeC3, totalAssemblyTimeW1, totalAssemblyTimeW2, totalAssemblyTimeW3;
+	
 	private static int totalC1Inspected, totalC2Inspected, totalC3Inspected, totalAssembledW1, totalAssembledW2,
 			totalAssembledW3;
+	
 	private static double averageInspectionTimeC1, averageInspectionTimeC2, averageInspectionTimeC3,
 			averageAssemblyTimeW1, averageAssemblyTimeW2, averageAssemblyTimeW3;
+	
+	//This Random variable is only used to determine whether a C2 or C3 component is to be inspected by Inspector 2
 	private static Random randomNum;
+	
+	//These RNG are the custom made LCM random number generators that generate random variates for the inspection and assembly times
 	private static RandomNumberGenerator RNGC1, RNGC2, RNGC3, RNGW1, RNGW2, RNGW3;
 	private static int[] seeds;
 
 	public static enum bufferType{BC1W1, BC1W2, BC1W3, BC2W2, BC3W3};
 	private static FileEditor fileEditor;
+	
+	
 	/**
 	 * Initialize all the variables to their initial states and prime the simulation (both inspectors start inspecting
 	 * components).
@@ -117,12 +138,19 @@ public class Model {
 				time = RNGW3.generateRandomVariate();
 				break;
 		}
+		//Only update statistics if past the initialization phase
 		if (clock > T0) {
 			updateStats(time, location, component);
 		}
 		return time;
 	}
 
+	/**
+	 * The updateStats function updates the recorded statistics based on the information provided
+	 * @param double time to complete the task
+	 * @param Event.eventLocation enum location can be either Inspector or Workstation 
+	 * @param Component component is the associated component
+	 */
 	private static void updateStats(double time, Event.eventLocation location, Component component) {
 		if(time+clock<chosenTime){
 			switch (location){
@@ -168,15 +196,29 @@ public class Model {
 	 * methods.
 	 * @param args - int[] representing the seeds for the Random Number Generators
 	 * @param  totalSimTime - the amount of time, in minutes, that the simulation will run
+	 * @return double[] results - an array where [0] = productCount, [1] = blocked time proportion of I1, and [2] = blocked time proportion of I2
 	 */
-	public static double[] runSimulation(int[] args, int totalSimTime) {
+	public static double[] runSimulation(int[] args, int totalSimTime, boolean useAltPolicy) {
+		//The program sleeps for 1 second at each start so that each Replication's .txt file does not overwrite the previous .txt file
+		try
+		{
+		    Thread.sleep(1000);
+		}
+		catch(InterruptedException ex)
+		{
+		    Thread.currentThread().interrupt();
+		}
+		
 		//Create a text file to hold the output statistics for this simulation run
 		String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date());
 		fileEditor = new FileEditor("Results\\"+timeStamp);
 		fileEditor.createNewFile();
 
+		usingAltPolicy = useAltPolicy;
+		
 		Event nextEvent = null;
 		initialize(args, totalSimTime);
+		
 		//Create first Finish Inspection events for both inspectors (initial state of simulation)
 		scheduleEvent(Event.eventType.FI, new Component(1, Component.serviceType.INSPECTOR), Event.eventLocation.I1);    //Inspector 1
 		scheduleEvent(Event.eventType.FI, new Component(randomNum.nextInt(2)+2,
@@ -184,8 +226,11 @@ public class Model {
 		isI1Busy=true;
 		isI2Busy=true;
 
+		//While there are events left to process before the chosen run time is reached, then the event is polled from the FEL and processed
 		while(!FEL.isEmpty() && (clock<chosenTime)){
 			nextEvent = FEL.poll();
+			
+			//Only record stats if past initialization phase
 			if (clock > T0) {
 				fileEditor.writeToFile("Clock is: "+clock);
 				fileEditor.writeToFile(nextEvent.toString());
@@ -197,8 +242,12 @@ public class Model {
 				processEvent(nextEvent);
 			}
 		}
+		//The final stats are calculated
 		getFinalStats();
+		//The final stats are written to the .txt file
 		generateReport();
+		
+		//The important statistics are returned by the function to be recorded and used to find the across replications average value
 		double[] results = new double[3];
 		results[0] = productCount;
 		results[1] = blockedProportionI1;
@@ -207,17 +256,22 @@ public class Model {
 	}
 
 	/**
-	 * Calculate the proportion of time that the inspectors were blocked throughout the simulation.
+	 * Calculate the final statistics of this replication
 	 */
 	public static void getFinalStats() {
+		//If I1 or I2 ended the simulation blocked, that time spent blocked is added to the total time spent blocked
 		if(startBlockedTimeI2 != 0.0){
 			totalBlockedTimeI2 += clock - startBlockedTimeI2;
 		}
 		if(startBlockedTimeI1 != 0.0){
 			totalBlockedTimeI1 += clock - startBlockedTimeI1;
 		}
+		
+		//The proportion of time spent blocked is calculated
 		blockedProportionI1 = totalBlockedTimeI1/chosenTime;
 		blockedProportionI2 = totalBlockedTimeI2/chosenTime;
+		
+		//The average inspection and assembly times are calculated
 		if(totalC1Inspected != 0.0){averageInspectionTimeC1 = totalInspectionTimeC1/totalC1Inspected;}
 		if(totalC2Inspected != 0.0){averageInspectionTimeC2 = totalInspectionTimeC2/totalC2Inspected;}
 		if(totalC3Inspected != 0.0){averageInspectionTimeC3 = totalInspectionTimeC3/totalC3Inspected;}
@@ -265,7 +319,12 @@ public class Model {
 		}
 	}
 
+	/**
+	 * The processEAEvent function processes End Assembly events and checks if future EA events can be scheduled
+	 * @param Event event
+	 */
 	public static void processEAEvent(Event event) {
+		//Only records if past initialization phase
 		if (clock > T0) {
 			productCount++;
 		}
@@ -292,7 +351,11 @@ public class Model {
 		int[] bufferSizes = new int[3];
 		//Component 1
 		if(c.getId() == 1){
-			componentAdded = selectC1Buffer(c);
+			if (usingAltPolicy) {
+				componentAdded = altSelectC1Buffer(c);
+			} else {
+				componentAdded = selectC1Buffer(c);
+			}
 		}
 		//Component 2
 		else if(c.getId() == 2){
@@ -333,7 +396,7 @@ public class Model {
 	 * selectC1Buffer selects the C1 buffer for the given component following the chosen policy.
 	 * The addToBuffer function is then called to try and place the component in the buffer.
 	 * If successful it returns true, false otherwise.
-	 * 
+	 * @param Component c
 	 * @return boolean
 	 */
 	public static boolean selectC1Buffer(Component c) {
@@ -356,13 +419,52 @@ public class Model {
 	}
 	
 	/**
+	 * altSelectC1Buffer selects the C1 buffer for inspector 1, using an alternative policy where the C1 buffer of 
+	 * workstation 3 is checked first, then workstation 2, and then the last to considered is workstation 1.
+	 * The function then calls addToBuffer to try and add the component to the buffer. 
+	 * If successful it returns true, false otherwise
+	 * @param Component c
+	 * @return boolean
+	 */
+	public static boolean altSelectC1Buffer(Component c) {
+		bufferType buffer;
+		int[] bufferSizes = new int[3];
+		bufferSizes[0] = bufferC1W1.size();
+		bufferSizes[1] = bufferC1W2.size();
+		bufferSizes[2] = bufferC1W3.size();
+		
+		if (alternateC1Selection == 1) {
+			buffer = bufferType.BC1W1;
+			alternateC1Selection++;
+		} else if (alternateC1Selection == 2) {
+			buffer = bufferType.BC1W2;
+			alternateC1Selection++;
+		} else {
+			buffer = bufferType.BC1W3;
+			alternateC1Selection = 1;
+		}
+		/*if (bufferSizes[1] < 2) {
+			buffer = bufferType.BC1W2;
+		} else if (bufferSizes[0] < 2) {
+			buffer = bufferType.BC1W1;
+		} else {
+			buffer = bufferType.BC1W3;
+		}*/
+		return addToBuffer(buffer,c);
+	}
+	
+	/**
 	 * checkToUnblockInspectors function checks if each Inspector is blocked, and if so, checks to see if it can now unblock.
 	 * If it can unblock, the component is added to the appropriate buffer, and statistics are taken of the time spent blocked.
 	 */
 	public static void checkToUnblockInspectors() {
 		boolean result = false;
 		if (isI1Blocked) {
-			result = selectC1Buffer(blockedI1Component);
+			if (usingAltPolicy) {
+				result = altSelectC1Buffer(blockedI1Component);
+			} else {
+				result = selectC1Buffer(blockedI1Component);
+			}
 			if (result) {
 				isI1Blocked = false;
 				blockedI1Component = null;
@@ -415,14 +517,16 @@ public class Model {
 				scheduleEvent(Event.eventType.EA, event.getC(), Event.eventLocation.W1);
 				isW1Busy = true;
 			}
-		} else if (!isW2Busy) {
+		}
+		if (!isW2Busy) {
 			if ((!bufferC1W2.isEmpty())&&(!bufferC2W2.isEmpty())){
 				bufferC1W2.remove(0);
 				bufferC2W2.remove(0);
 				scheduleEvent(Event.eventType.EA, event.getC(), Event.eventLocation.W2);
 				isW2Busy = true;
 			}
-		} else if (!isW3Busy) {
+		}
+		if (!isW3Busy) {
 			if ((!bufferC1W3.isEmpty())&&(!bufferC3W3.isEmpty())){
 				bufferC1W3.remove(0);
 				bufferC3W3.remove(0);
@@ -471,6 +575,9 @@ public class Model {
 		return componentAdded;
 	}
 
+	/**
+	 * The generateReport function writes all of the statistics and starting parameters to a .txt file
+	 */
 	private static void generateReport(){
 		fileEditor.writeToFile("*** Final Report ***");
 		fileEditor.writeToFile("Initial RNG seeds: "+seeds[0]+", "+seeds[1]+", "+seeds[2]+", "+seeds[3]+", "
