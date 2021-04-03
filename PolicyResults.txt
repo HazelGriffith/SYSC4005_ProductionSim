@@ -1,0 +1,20 @@
+ORIGINAL RESULTS
+The long run mean product count = 175.9145299145299+-0.6732476479197709
+The long run mean blocked I1 proportion = 2.137226461117179E-5+-3.406466611102527E-5
+The long run mean blocked I2 proportion = 0.6298083737583317+-0.013133627049944509
+ALTERNATIVE RESULTS {if C1W3 < 2 do that; else if C1W2 < 2 do that; else do C1W1}
+The long run mean product count = 171.1196581196581+-0.7346313412240669
+The long run mean blocked I1 proportion = 0.003243178462520536+-6.821773444219468E-4
+The long run mean blocked I2 proportion = 0.041796986692434986+-0.00492663933209214
+ALTERNATIVE RESULTS {if C1W3 < 2 do that; else if C1W1 < 2 do that; else do C1W2}
+The long run mean product count = 172.47863247863248+-0.8724685362028513
+The long run mean blocked I1 proportion = 0.0016980144023196948+-4.216298326840068E-4
+The long run mean blocked I2 proportion = 0.7796525554082451+-0.015330554505105492
+ALTERNATIVE RESULTS {if C1W2 < 2 do that; else if C1W1 < 2 do that; else do C1W3}
+The long run mean product count = 173.6239316239316+-0.8648629255694131
+The long run mean blocked I1 proportion = 6.248454154600179E-4+-2.2423844537752718E-4
+The long run mean blocked I2 proportion = 0.7496617631661973+-0.014690147904180058
+ALTERNATIVE RESULTS {do C1W1 first, then C1W2, then C1W3, then back to C1W1, and follow that order each time}
+The long run mean product count = 175.8034188034188+-0.7635814035751118
+The long run mean blocked I1 proportion = 0.00266387746090968+-6.168325373612376E-4
+The long run mean blocked I2 proportion = 0.10045044979028028+-0.007113828208037639
