@@ -9,11 +9,22 @@ import java.util.HashMap;
 public class SimulationRunner {
 	public static enum resultType {APC, ABPI1, ABPI2, APC_CONFIDENCE_INTERVAL, ABPI1_CONFIDENCE_INTERVAL, ABPI2_CONFIDENCE_INTERVAL};
 	
-
+	public static double[] oProductCount, aProductCount, oBlockedProportionI1,aBlockedProportionI1, oBlockedProportionI2,
+			aBlockedProportionI2, diffProductCount, diffBlockProportionI1, diffBlockProportionI2;
 	
     public static void main(String[] args) {
     	// R is number of replications
     	int R = 117;
+
+		oProductCount = new double[R];
+		aProductCount = new double[R];
+		oBlockedProportionI1 = new double[R];
+		aBlockedProportionI1 = new double[R];
+		oBlockedProportionI2 = new double[R];
+		aBlockedProportionI2 = new double[R];
+		diffProductCount = new double[R];
+		diffBlockProportionI1 = new double[R];
+		diffBlockProportionI2 = new double[R];
     	
 		//The seeds are calculated
     	int firstSeed = 1234;
@@ -22,109 +33,103 @@ public class SimulationRunner {
     		seeds[i] = firstSeed+i;
     	}
     	
-    	HashMap<resultType, Double> originalResults = runReplications(seeds, 2000, false, R);
+    	runReplications(seeds, 2000, false, R);
     	
-    	HashMap<resultType, Double> alternateResults = runReplications(seeds, 2000, true, R);
+    	runReplications(seeds, 2000, true, R);
+
+    	for(int j=0; j<R; j++){
+    		diffProductCount[j] = oProductCount[j]-aProductCount[j];
+    		diffBlockProportionI1[j] = oBlockedProportionI1[j] - aBlockedProportionI1[j];
+    		diffBlockProportionI2[j] = oBlockedProportionI2[j] - aBlockedProportionI2[j];
+		}
+    	double sumPC =0.0;
+    	double sumBPI1 =0.0;
+    	double sumBPI2 =0.0;
+    	for(int a=0; a<R; a++){
+    		sumPC += diffProductCount[a];
+    		sumBPI1 += diffBlockProportionI1[a];
+    		sumBPI2 += diffBlockProportionI2[a];
+		}
+    	double avgPC=0.0;
+    	double avgBPI1=0.0;
+    	double avgBPI2=0.0;
+    	avgPC = sumPC/R;
+    	avgBPI1 = sumBPI1/R;
+    	avgBPI2 = sumBPI2/R;
+
+    	double svPC=0.0;
+    	double svBPI1=0.0;
+    	double svBPI2=0.0;
+		for(int b=0; b<R; b++){
+			svPC += Math.pow(diffProductCount[b]-avgPC, 2);
+			svBPI1 += Math.pow(diffBlockProportionI1[b]-avgBPI1, 2);
+			svBPI2 += Math.pow(diffBlockProportionI2[b]-avgBPI2, 2);
+		}
+		svPC /= (R-1);
+		svBPI1 /= (R-1);
+		svBPI2 /= (R-1);
+
+		double sePC=0.0;
+		double seBPI1=0.0;
+		double seBPI2=0.0;
+		sePC=Math.sqrt(svPC)/Math.sqrt(R);
+		seBPI1=Math.sqrt(svBPI1)/Math.sqrt(R);
+		seBPI2=Math.sqrt(svBPI2)/Math.sqrt(R);
+		double[] ciPC = new double[2];
+		double[] ciBPI1 = new double[2];
+		double[] ciBPI2 = new double[2];
+		//lower bound
+		ciPC[0] = avgPC - (1.66*sePC);
+		//upper bound
+		ciPC[1] = avgPC + (1.66*sePC);
+		//lower bound
+		ciBPI1[0] = avgBPI1 - (1.66*seBPI1);
+		//upper bound
+		ciBPI1[1] = avgBPI1 + (1.66*seBPI1);
+		//lower bound
+		ciBPI2[0] = avgBPI2 - (1.66*seBPI2);
+		//upper bound
+		ciBPI2[1] = avgBPI2 + (1.66*seBPI2);
+
+		System.out.println("***SAMPLE AVERAGES***");
+		System.out.println("The sample average of product count: "+avgPC);
+		System.out.println("The sample average of blocked I1 proportion: "+avgBPI1);
+		System.out.println("The sample average of blocked I2 proportion: "+avgBPI2);
+
+		System.out.println("***SAMPLE VARIANCES OF DIFFERENCES***");
+		System.out.println("The standard variance of product count: "+svPC);
+		System.out.println("The standard variance of blocked I1 proportion: "+svBPI1);
+		System.out.println("The standard variance of blocked I2 proportion: "+svBPI2);
+
+		System.out.println("***STANDARD ERRORS***");
+		System.out.println("The standard error of product count: "+sePC);
+		System.out.println("The standard error of blocked I1 proportion: "+seBPI1);
+		System.out.println("The standard error of blocked I2 proportion: "+seBPI2);
+
+		System.out.println("***95% CONFIDENCE INTERVALS***");
+		System.out.println("The 95% confidence interval of product count: "+ciPC[0]+"<= D <="+ciPC[1]);
+		System.out.println("The 95% confidence interval of blocked I1 proportion: "+ciBPI1[0]+"<= D <="+ciBPI1[1]);
+		System.out.println("The 95% confidence interval of blocked I2 proportion: "+ciBPI2[0]+"<= D <="+ciBPI2[1]);
     	
-    	System.out.println("ORIGINAL RESULTS");
-    	System.out.println("The long run mean product count = " + originalResults.get(resultType.APC)+ "+-" + originalResults.get(resultType.APC_CONFIDENCE_INTERVAL));
-    	System.out.println("The long run mean blocked I1 proportion = " + originalResults.get(resultType.ABPI1) + "+-" + originalResults.get(resultType.ABPI1_CONFIDENCE_INTERVAL));
-    	System.out.println("The long run mean blocked I2 proportion = " + originalResults.get(resultType.ABPI2) + "+-" + originalResults.get(resultType.ABPI2_CONFIDENCE_INTERVAL));
-    	
-    	System.out.println("ALTERNATIVE RESULTS");
-    	System.out.println("The long run mean product count = " + alternateResults.get(resultType.APC)+ "+-" + alternateResults.get(resultType.APC_CONFIDENCE_INTERVAL));
-    	System.out.println("The long run mean blocked I1 proportion = " + alternateResults.get(resultType.ABPI1) + "+-" + alternateResults.get(resultType.ABPI1_CONFIDENCE_INTERVAL));
-    	System.out.println("The long run mean blocked I2 proportion = " + alternateResults.get(resultType.ABPI2) + "+-" + alternateResults.get(resultType.ABPI2_CONFIDENCE_INTERVAL));
-    	
+
     }
     
-    private static HashMap<resultType, Double> runReplications(int[] seeds, int timeToRun, boolean useAltPolicy, int R) {
-    	//This HashMap relates the long-run mean statistics taken and their confidence intervals with their associated values
-    	HashMap<resultType, Double> results = new HashMap<>();
-    	
-    	//This arrayList contains the 3 main stats of each replication
-    	ArrayList<double[]> acrossRresults = new ArrayList<>();
-    	
-    	//long-run mean product count
-    	double averageProductCount = 0;
-    	
-    	//S value of long-run mean product count
-    	double APCS = 0;
-    	
-    	//standard error of the long-run mean product count
-    	double APCStandardError;
-    	
-    	//confidence interval of the long-run mean product count
-    	double APCConfidenceInterval;
-    	
-    	//long-run mean blocked time proportion of I1
-    	double averageBlockedProportionI1 = 0;
-    	
-    	//S value of long-run mean blocked time proportion of I1
-    	double ABPI1S = 0;
-    	
-    	//standard error of the long-run mean blocked time proportion of I1
-    	double ABPI1StandardError;
-    	
-    	//confidence interval of the long-run mean blocked time proportion of I1
-    	double ABPI1ConfidenceInterval;
-    	
-    	// long-run mean blocked time proportion of I2
-		double averageBlockedProportionI2 = 0;
-		
-		//S value of long-run mean blocked time proportion of I2
-		double ABPI2S = 0;
-		
-		//standard error of long-run mean blocked time proportion of I2
-		double ABPI2StandardError;
-		
-		//confidence interval of the long-run mean blocked time proportion of I2
-		double ABPI2ConfidenceInterval;
-		
+    private static void runReplications(int[] seeds, int timeToRun, boolean useAltPolicy, int R) {
 		// R replications of the simulation are run
-    	for (int i = 0; i < R; i++) {
-    		
-    		acrossRresults.add(Model.runSimulation(seeds, timeToRun, useAltPolicy));
-    		averageProductCount += acrossRresults.get(i)[0];
-    		averageBlockedProportionI1 += acrossRresults.get(i)[1];
-    		averageBlockedProportionI2 += acrossRresults.get(i)[2];
-    	}
-    	
-    	//averages are calculated
-    	averageProductCount /= R;
-    	averageBlockedProportionI1 /= R;
-    	averageBlockedProportionI2 /= R;
-    	
-    	//The S values are calculated
-    	for (int i = 0; i < R; i++) {
-    		APCS += Math.pow((acrossRresults.get(i)[0] - averageProductCount), 2);
-    		ABPI1S += Math.pow((acrossRresults.get(i)[1] - averageBlockedProportionI1), 2);
-    		ABPI2S += Math.pow((acrossRresults.get(i)[2] - averageBlockedProportionI2), 2);
-    	}
-    	APCS /= R-1;
-    	APCS = Math.sqrt(APCS);
-    	ABPI1S /= R-1;
-    	ABPI1S = Math.sqrt(ABPI1S);
-    	ABPI2S /= R-1;
-    	ABPI2S = Math.sqrt(ABPI2S);
-    	
-    	//standard error is calculated
-    	APCStandardError = APCS/Math.sqrt(R);
-    	ABPI1StandardError = ABPI1S/Math.sqrt(R);
-    	ABPI2StandardError = ABPI2S/Math.sqrt(R);
-    	
-    	//confidence intervals are calculated with 95% over 117 replications
-    	APCConfidenceInterval = (1.98*APCStandardError);
-    	ABPI1ConfidenceInterval = (1.98*ABPI1StandardError);
-    	ABPI2ConfidenceInterval = (1.98*ABPI2StandardError);
-    	
-    	results.put(resultType.APC, averageProductCount);
-    	results.put(resultType.APC_CONFIDENCE_INTERVAL, APCConfidenceInterval);
-    	results.put(resultType.ABPI1, averageBlockedProportionI1);
-    	results.put(resultType.ABPI1_CONFIDENCE_INTERVAL, ABPI1ConfidenceInterval);
-    	results.put(resultType.ABPI2, averageBlockedProportionI2);
-    	results.put(resultType.ABPI2_CONFIDENCE_INTERVAL, ABPI2ConfidenceInterval);
-    	
-    	return results;
-    }
+		for (int i = 0; i < R; i++) {
+			double[] results;
+			results = Model.runSimulation(seeds, timeToRun, useAltPolicy);
+
+			if (!useAltPolicy) {
+				oProductCount[i] = results[0];
+				oBlockedProportionI1[i] = results[1];
+				oBlockedProportionI2[i] = results[2];
+			} else {
+				aProductCount[i] = results[0];
+				aBlockedProportionI1[i] = results[1];
+				aBlockedProportionI2[i] = results[2];
+			}
+		}
+	}
+
 }
